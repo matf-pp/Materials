@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>GuessNumber</class>
+ <widget class="QWidget" name="GuessNumber">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>350</width>
+    <height>220</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Pogađanje broja</string>
+  </property>
+
+  <layout class="QVBoxLayout" name="verticalLayout">
+
+   <item>
+    <widget class="QLabel" name="labelInfo">
+     <property name="text">
+      <string>Pogodi broj od 1 do 100</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QLineEdit" name="lineEditNumber">
+     <property name="placeholderText">
+      <string>Unesi broj</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QPushButton" name="buttonGuess">
+     <property name="text">
+      <string>Pogodi</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QLabel" name="labelResult">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string>font-size: 16px;</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QLabel" name="labelAttempts">
+     <property name="text">
+      <string>Pokušaji: 0 / 10</string>
+     </property>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
+

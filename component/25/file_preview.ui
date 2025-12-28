@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>FilePreview</class>
+ <widget class="QWidget" name="FilePreview">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>500</width>
+    <height>400</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>File Preview App</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+
+   <!-- Load file button -->
+   <item>
+    <widget class="QPushButton" name="btnLoad">
+     <property name="text">
+      <string>Load File</string>
+     </property>
+    </widget>
+   </item>
+
+   <!-- Label for filename -->
+   <item>
+    <widget class="QLabel" name="labelFileName">
+     <property name="text">
+      <string>No file loaded</string>
+     </property>
+    </widget>
+   </item>
+
+   <!-- Scroll area to display text or image -->
+   <item>
+    <widget class="QScrollArea" name="scrollArea">
+     <property name="widgetResizable">
+      <bool>true</bool>
+     </property>
+     <widget class="QWidget" name="scrollAreaWidgetContents">
+      <layout class="QVBoxLayout" name="scrollLayout">
+       <item>
+        <widget class="QTextEdit" name="textPreview">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QLabel" name="imagePreview">
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
+

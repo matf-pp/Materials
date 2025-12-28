@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>TemperatureConverter</class>
+ <widget class="QWidget" name="TemperatureConverter">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>350</width>
+    <height>200</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Konvertor temperature</string>
+  </property>
+
+  <layout class="QVBoxLayout" name="verticalLayout">
+
+   <item>
+    <widget class="QLabel" name="labelTitle">
+     <property name="text">
+      <string>Konvertor °C → °F</string>
+     </property>
+     <property name="styleSheet">
+      <string>font-size: 18px;</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QLineEdit" name="lineEditCelsius">
+     <property name="placeholderText">
+      <string>Unesi temperaturu u °C</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QPushButton" name="buttonConvert">
+     <property name="text">
+      <string>Konvertuj</string>
+     </property>
+    </widget>
+   </item>
+
+   <item>
+    <widget class="QLabel" name="labelResult">
+     <property name="text">
+      <string/>
+     </property>
+     <property name="styleSheet">
+      <string>font-size: 16px;</string>
+     </property>
+    </widget>
+   </item>
+
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
+
