@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>SudokuWindow</class>
+ <widget class="QMainWindow" name="SudokuWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>600</width>
+    <height>650</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Sudoku</string>
+  </property>
+
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+
+    <!-- GRID -->
+    <item>
+     <widget class="QWidget" name="gridWidget">
+      <layout class="QGridLayout" name="gridLayout">
+       <!-- Cells will be added dynamically in code -->
+      </layout>
+     </widget>
+    </item>
+
+    <!-- BUTTONS -->
+    <item>
+     <layout class="QHBoxLayout" name="buttonsLayout">
+      <item>
+       <widget class="QPushButton" name="clearButton">
+        <property name="text"><string>Clear</string></property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="validateButton">
+        <property name="text"><string>Validate</string></property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
+
