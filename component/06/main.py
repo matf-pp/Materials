@@ -5,21 +5,26 @@ class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
+        # Load UI
         uic.loadUi("main.ui", self)
 
-        # Connect buttons
-        self.btn_one.clicked.connect(lambda: self.update_status("Button One clicked"))
-        self.btn_two.clicked.connect(lambda: self.update_status("Button Two clicked"))
-        self.btn_three.clicked.connect(lambda: self.update_status("Button Three clicked"))
+        # Connect button
+        self.pushButton.clicked.connect(self.show_selected)
 
-        self.btn_ok.clicked.connect(self.ok_clicked)
-        self.btn_cancel.clicked.connect(self.close)
+    def show_selected(self):
+        selected = []
 
-    def update_status(self, text):
-        self.label_status.setText(f"Status: {text}")
+        if self.checkBox_1.isChecked():
+            selected.append("Option A")
+        if self.checkBox_2.isChecked():
+            selected.append("Option B")
+        if self.checkBox_3.isChecked():
+            selected.append("Option C")
 
-    def ok_clicked(self):
-        self.label_status.setText("Status: OK pressed")
+        if selected:
+            self.label_result.setText("Selected: " + ", ".join(selected))
+        else:
+            self.label_result.setText("No options selected")
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

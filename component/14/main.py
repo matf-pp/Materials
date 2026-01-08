@@ -1,33 +1,42 @@
-# main.py
 import sys
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtSvg import QSvgWidget
-from PyQt5.QtCore import Qt
-from ui_main import GameUI
+import string
+import secrets
+
+from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox
+from PyQt5.uic import loadUi
 
 
-class BulletGame(GameUI):
+class PasswordGenerator(QWidget):
     def __init__(self):
         super().__init__()
+        loadUi("password_generator.ui", self)
 
-    def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
-            self.shoot(event.x(), event.y())
+        self.generateButton.clicked.connect(self.generate_password)
 
-    def shoot(self, x, y):
-        hole = QSvgWidget("hole.svg", self)
+    def generate_password(self):
+        length = self.lengthSpinBox.value()
+        chars = ""
 
-        size = 40
-        hole.setFixedSize(size, size)
+        if self.lowerCheckBox.isChecked():
+            chars += string.ascii_lowercase
+        if self.upperCheckBox.isChecked():
+            chars += string.ascii_uppercase
+        if self.digitsCheckBox.isChecked():
+            chars += string.digits
+        if self.symbolsCheckBox.isChecked():
+            chars += string.punctuation
 
-        # Centriranje rupe na mjesto klika
-        hole.move(x - size // 2, y - size // 2)
-        hole.show()
+        if not chars:
+            QMessageBox.warning(self, "Error", "Select at least one character type.")
+            return
+
+        password = "".join(secrets.choice(chars) for _ in range(length))
+        self.passwordLineEdit.setText(password)
 
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    game = BulletGame()
-    game.show()
+    window = PasswordGenerator()
+    window.show()
     sys.exit(app.exec_())
 

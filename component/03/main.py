@@ -1,34 +1,33 @@
 import sys
-from PyQt5 import QtWidgets, uic
+from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5 import uic
 
-class MainWindow(QtWidgets.QMainWindow):
+def fibonacci_generator():
+    a, b = 0, 1
+    while True:
+        yield a
+        a, b = b, a + b
+
+class FibonacciApp(QWidget):
     def __init__(self):
         super().__init__()
 
         # Load UI
         uic.loadUi("main.ui", self)
 
+        # Create generator
+        self.fib_gen = fibonacci_generator()
+
         # Connect button
-        self.pushButton.clicked.connect(self.show_selected)
+        self.btnNext.clicked.connect(self.next_fibonacci)
 
-    def show_selected(self):
-        selected = []
-
-        if self.checkBox_1.isChecked():
-            selected.append("Option A")
-        if self.checkBox_2.isChecked():
-            selected.append("Option B")
-        if self.checkBox_3.isChecked():
-            selected.append("Option C")
-
-        if selected:
-            self.label_result.setText("Selected: " + ", ".join(selected))
-        else:
-            self.label_result.setText("No options selected")
+    def next_fibonacci(self):
+        value = next(self.fib_gen)
+        self.textOutput.append(str(value))
 
 if __name__ == "__main__":
-    app = QtWidgets.QApplication(sys.argv)
-    window = MainWindow()
+    app = QApplication(sys.argv)
+    window = FibonacciApp()
     window.show()
     sys.exit(app.exec_())
 

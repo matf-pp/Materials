@@ -1,38 +1,27 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.QtCore import QTimer
-from PyQt5 import uic
+from PyQt5.QtWidgets import QApplication
+from ui_main import Ui_MainWindow
 
-
-class TimerApp(QWidget):
+class MainApp(Ui_MainWindow):
     def __init__(self):
         super().__init__()
+        self.printButton.clicked.connect(self.print_table_data)
 
-        uic.loadUi("timer.ui", self)
+    def print_table_data(self):
+        rows = self.table.rowCount()
+        cols = self.table.columnCount()
 
-        self.seconds = 0
-
-        self.timer = QTimer()
-        self.timer.setInterval(1000)  # 1 sekunda
-        self.timer.timeout.connect(self.update_time)
-
-        self.buttonStart.clicked.connect(self.start_timer)
-        self.buttonStop.clicked.connect(self.stop_timer)
-
-    def update_time(self):
-        self.seconds += 1
-        self.labelTime.setText(f"{self.seconds} s")
-
-    def start_timer(self):
-        self.timer.start()
-
-    def stop_timer(self):
-        self.timer.stop()
-
+        print("Table Data:")
+        for row in range(rows):
+            row_data = []
+            for col in range(cols):
+                item = self.table.item(row, col)
+                row_data.append(item.text() if item else "")
+            print(row_data)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    window = TimerApp()
+    window = MainApp()
     window.show()
     sys.exit(app.exec_())
 

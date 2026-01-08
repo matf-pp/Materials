@@ -1,27 +1,29 @@
 import sys
-from PyQt5.QtWidgets import QApplication
-from ui_main import Ui_MainWindow
+from PyQt5 import QtWidgets, uic
 
-class MainApp(Ui_MainWindow):
+class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        self.printButton.clicked.connect(self.print_table_data)
 
-    def print_table_data(self):
-        rows = self.table.rowCount()
-        cols = self.table.columnCount()
+        uic.loadUi("main.ui", self)
 
-        print("Table Data:")
-        for row in range(rows):
-            row_data = []
-            for col in range(cols):
-                item = self.table.item(row, col)
-                row_data.append(item.text() if item else "")
-            print(row_data)
+        # Connect buttons
+        self.btn_one.clicked.connect(lambda: self.update_status("Button One clicked"))
+        self.btn_two.clicked.connect(lambda: self.update_status("Button Two clicked"))
+        self.btn_three.clicked.connect(lambda: self.update_status("Button Three clicked"))
+
+        self.btn_ok.clicked.connect(self.ok_clicked)
+        self.btn_cancel.clicked.connect(self.close)
+
+    def update_status(self, text):
+        self.label_status.setText(f"Status: {text}")
+
+    def ok_clicked(self):
+        self.label_status.setText("Status: OK pressed")
 
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    window = MainApp()
+    app = QtWidgets.QApplication(sys.argv)
+    window = MainWindow()
     window.show()
     sys.exit(app.exec_())
 

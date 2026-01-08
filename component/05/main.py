@@ -1,6 +1,6 @@
 import sys
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtWidgets import QButtonGroup
+from PyQt5.QtCore import Qt
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -8,23 +8,34 @@ class MainWindow(QtWidgets.QMainWindow):
 
         uic.loadUi("main.ui", self)
 
-        # Create a button group (recommended)
-        self.group = QButtonGroup(self)
-        self.group.addButton(self.radio_A)
-        self.group.addButton(self.radio_B)
-        self.group.addButton(self.radio_C)
+        # Connect checkbox signals
+        self.checkBox_A.stateChanged.connect(self.on_state_changed)
+        self.checkBox_B.stateChanged.connect(self.on_state_changed)
 
-        # Optional: assign IDs
-        self.group.setId(self.radio_A, 1)
-        self.group.setId(self.radio_B, 2)
-        self.group.setId(self.radio_C, 3)
+        # Also show toggled signal
+        self.checkBox_A.toggled.connect(self.on_toggled)
+        self.checkBox_B.toggled.connect(self.on_toggled)
 
-        # Connect signal
-        self.group.buttonToggled.connect(self.on_radio_toggled)
+    def on_state_changed(self, state):
+        """
+        state values:
+        Qt.Unchecked = 0
+        Qt.PartiallyChecked = 1
+        Qt.Checked = 2
+        """
+        sender = self.sender()
+        if state == Qt.Checked:
+            self.label_info.setText(f"{sender.text()} checked")
+        else:
+            self.label_info.setText(f"{sender.text()} unchecked")
 
-    def on_radio_toggled(self, button, checked):
-        if checked:
-            self.label_result.setText(f"Selected: {button.text()}")
+    def on_toggled(self, checked):
+        """
+        checked values:
+        True / False
+        """
+        sender = self.sender()
+        print(f"{sender.text()} toggled: {checked}")
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

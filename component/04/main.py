@@ -1,41 +1,30 @@
 import sys
 from PyQt5 import QtWidgets, uic
-from PyQt5.QtCore import Qt
 
 class MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
 
+        # Load UI
         uic.loadUi("main.ui", self)
 
-        # Connect checkbox signals
-        self.checkBox_A.stateChanged.connect(self.on_state_changed)
-        self.checkBox_B.stateChanged.connect(self.on_state_changed)
+        # Connect button
+        self.pushButton.clicked.connect(self.show_selected)
 
-        # Also show toggled signal
-        self.checkBox_A.toggled.connect(self.on_toggled)
-        self.checkBox_B.toggled.connect(self.on_toggled)
+    def show_selected(self):
+        selected = []
 
-    def on_state_changed(self, state):
-        """
-        state values:
-        Qt.Unchecked = 0
-        Qt.PartiallyChecked = 1
-        Qt.Checked = 2
-        """
-        sender = self.sender()
-        if state == Qt.Checked:
-            self.label_info.setText(f"{sender.text()} checked (stateChanged)")
+        if self.checkBox_1.isChecked():
+            selected.append("Option A")
+        if self.checkBox_2.isChecked():
+            selected.append("Option B")
+        if self.checkBox_3.isChecked():
+            selected.append("Option C")
+
+        if selected:
+            self.label_result.setText("Selected: " + ", ".join(selected))
         else:
-            self.label_info.setText(f"{sender.text()} unchecked (stateChanged)")
-
-    def on_toggled(self, checked):
-        """
-        checked values:
-        True / False
-        """
-        sender = self.sender()
-        print(f"{sender.text()} toggled: {checked}")
+            self.label_result.setText("No options selected")
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)

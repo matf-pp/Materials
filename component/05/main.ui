@@ -11,12 +11,12 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Radio Button Example</string>
+   <string>Checkbox Signals</string>
   </property>
 
   <widget class="QWidget" name="centralwidget">
 
-   <widget class="QLabel" name="label_title">
+   <widget class="QLabel" name="label_info">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -26,11 +26,11 @@
      </rect>
     </property>
     <property name="text">
-     <string>Select one option:</string>
+     <string>Toggle a checkbox</string>
     </property>
    </widget>
 
-   <widget class="QRadioButton" name="radio_A">
+   <widget class="QCheckBox" name="checkBox_A">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -44,7 +44,7 @@
     </property>
    </widget>
 
-   <widget class="QRadioButton" name="radio_B">
+   <widget class="QCheckBox" name="checkBox_B">
     <property name="geometry">
      <rect>
       <x>50</x>
@@ -55,34 +55,6 @@
     </property>
     <property name="text">
      <string>Option B</string>
-    </property>
-   </widget>
-
-   <widget class="QRadioButton" name="radio_C">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>130</y>
-      <width>150</width>
-      <height>20</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Option C</string>
-    </property>
-   </widget>
-
-   <widget class="QLabel" name="label_result">
-    <property name="geometry">
-     <rect>
-      <x>50</x>
-      <y>180</y>
-      <width>300</width>
-      <height>30</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>No selection</string>
     </property>
    </widget>
 
