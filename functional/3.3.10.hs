@@ -1,17 +1,7 @@
-data UList a = Empty
-             | Cons a (UList a)
-             deriving Show
-
 infixr 7 :/:
 data OList a = End
              | (:/:) a (OList a)
-
-infixr 6 +/+
-(+/+) :: OList a -> OList a -> OList a
-End         +/+ rs = rs
-(l :/: End) +/+ rs = l :/: rs
-(l :/: ls)  +/+ rs = l :/: (ls +/+ rs)
-
+             deriving Eq
 
 -- Da bismo prikazali listu elemenata tipa `a`,
 -- neophodno je da znamo kako da prikazemo jedan element
@@ -20,13 +10,6 @@ instance Show a => Show (OList a) where
     show End = ""
     show (x :/: End) = show x
     show (x :/: xs)  = show x ++ ", " ++ show xs
-
-
--- Funkcija `fmap` transformise elemente kolekcije
--- i kao rezultat vraca kolekciju transformisanih elemenata
-instance Functor OList where
-    fmap f End = End
-    fmap f (x :/: xs) = f x :/: fmap f xs
 
 
 -- Funkcija `foldr` prolazi kroz kolekciju (sa desne strane)
