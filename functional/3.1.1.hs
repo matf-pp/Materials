@@ -7,14 +7,14 @@
 -- Uslovni izraz (mora imati else granu)
 sumaPrvihN n =
     if n == 0 then 0
-    else n + sumaPrvih(n-1)
+    else n + sumaPrvihN(n-1)
 
 -- Ogradjene jednacine (guards) - mozemo ih koristiti umesto 
 -- uslovnih izraza, bitan je redosled navodjenja, otherwise
 -- slucaj treba uvek staviti na kraju
 sumaPrvihN' n             -- primetimo da nema znaka "=" !
     | n == 0 = 0
-    | otherwise = n + sumaPrvih'(n-1)
+    | otherwise = n + sumaPrvihN'(n-1)
 
 -- jasno, ovaj zadatak se trivijalno moze resiti bez rekurzije
 -- ako znamo liste (vraticemo se na ovaj primer u nastavku):
