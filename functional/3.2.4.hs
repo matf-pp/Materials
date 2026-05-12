@@ -1,4 +1,7 @@
+prefixN :: [Int] -> [Int]
+prefixN = takeWhile (< 0)
 
+-- genericki prefiks liste:
 prefiks :: [a] -> [[a]]
 prefiks [] = [[]]
 prefiks (x:xs) = [] : map (x:) (prefiks xs)
