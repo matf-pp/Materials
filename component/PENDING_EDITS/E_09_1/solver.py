@@ -23,7 +23,7 @@ def solve_man_and_women():
         et = number("AND", assignment)
         women = number("WOMEN", assignment)
 
-        if men + et == women:
+        if men * et == women:
             solutions.append(
                 {
                     "assignment": assignment,
