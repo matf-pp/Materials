@@ -1,20 +1,30 @@
-from itertools import permutations
+from constraint import AllDifferentConstraint, Problem
 
 
 def magic_squares():
-    solutions = []
-    for values in permutations(range(1, 10)):
-        rows = [values[0:3], values[3:6], values[6:9]]
-        sums = [
-            sum(rows[0]),
-            sum(rows[1]),
-            sum(rows[2]),
-            rows[0][0] + rows[1][0] + rows[2][0],
-            rows[0][1] + rows[1][1] + rows[2][1],
-            rows[0][2] + rows[1][2] + rows[2][2],
-            rows[0][0] + rows[1][1] + rows[2][2],
-            rows[0][2] + rows[1][1] + rows[2][0],
-        ]
-        if all(total == 15 for total in sums):
-            solutions.append([list(row) for row in rows])
-    return solutions
+    variables = list(range(9))
+    problem = Problem()
+    problem.addVariables(variables, range(1, 10))
+    problem.addConstraint(AllDifferentConstraint(), variables)
+
+    lines = (
+        (0, 1, 2),
+        (3, 4, 5),
+        (6, 7, 8),
+        (0, 3, 6),
+        (1, 4, 7),
+        (2, 5, 8),
+        (0, 4, 8),
+        (2, 4, 6),
+    )
+    for line in lines:
+        problem.addConstraint(lambda a, b, c: a + b + c == 15, line)
+
+    solutions = sorted(
+        tuple(solution[index] for index in variables)
+        for solution in problem.getSolutions()
+    )
+    return [
+        [list(values[0:3]), list(values[3:6]), list(values[6:9])]
+        for values in solutions
+    ]

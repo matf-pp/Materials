@@ -1,3 +1,6 @@
+from constraint import Problem
+
+
 COINS = (1, 2, 5, 10, 20)
 
 
@@ -6,21 +9,25 @@ def coin_combinations(amount, coins=COINS):
         raise ValueError("Iznos mora biti nenegativan.")
 
     coins = tuple(sorted(coins))
-    combinations = []
-    current = {}
+    variables = [f"coin_{coin}" for coin in coins]
 
-    def search(index, rest):
-        if index == len(coins) - 1:
-            coin = coins[index]
-            if rest % coin == 0:
-                current[coin] = rest // coin
-                combinations.append({c: current.get(c, 0) for c in coins})
-            return
+    problem = Problem()
+    for variable, coin in zip(variables, coins):
+        problem.addVariable(variable, range(amount // coin + 1))
 
-        coin = coins[index]
-        for count in range(rest // coin + 1):
-            current[coin] = count
-            search(index + 1, rest - count * coin)
+    problem.addConstraint(
+        lambda *counts: sum(
+            coin * count for coin, count in zip(coins, counts)
+        )
+        == amount,
+        variables,
+    )
 
-    search(0, amount)
-    return combinations
+    solutions = problem.getSolutions()
+    solutions.sort(
+        key=lambda solution: tuple(solution[variable] for variable in variables)
+    )
+    return [
+        {coin: solution[variable] for coin, variable in zip(coins, variables)}
+        for solution in solutions
+    ]

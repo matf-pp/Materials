@@ -1,3 +1,6 @@
+from constraint import Problem
+
+
 SLOTS = ("Pon 09:00", "Pon 11:00", "Uto 09:00", "Uto 11:00")
 ROOMS = ("A1", "A2")
 DEFAULT_CLASSES = [
@@ -11,58 +14,59 @@ DEFAULT_CLASSES = [
 
 
 def make_schedule(classes, slots=SLOTS, rooms=ROOMS):
+    if not classes:
+        return []
+
     domains = [(slot, room) for slot in slots for room in rooms]
-    schedule = [None] * len(classes)
     order = sorted(
         range(len(classes)),
         key=lambda index: conflict_degree(index, classes),
         reverse=True,
     )
 
-    def can_assign(class_index, slot, room):
-        current = classes[class_index]
-        for other_index, assigned in enumerate(schedule):
-            if assigned is None:
-                continue
-            other_slot, other_room = assigned
-            if other_slot != slot:
-                continue
-            other = classes[other_index]
-            if other_room == room:
-                return False
-            if other["teacher"] == current["teacher"]:
-                return False
-            if other["group"] == current["group"]:
-                return False
-        return True
+    problem = Problem()
+    problem.addVariables(range(len(classes)), domains)
+    for first_index in range(len(classes)):
+        for second_index in range(first_index + 1, len(classes)):
+            problem.addConstraint(
+                compatible_classes(classes[first_index], classes[second_index]),
+                (first_index, second_index),
+            )
 
-    def search(order_index):
-        if order_index == len(order):
-            return True
-
-        class_index = order[order_index]
-        for slot, room in domains:
-            if not can_assign(class_index, slot, room):
-                continue
-            schedule[class_index] = (slot, room)
-            if search(order_index + 1):
-                return True
-            schedule[class_index] = None
-        return False
-
-    if not search(0):
+    solutions = problem.getSolutions()
+    if not solutions:
         return None
 
+    domain_index = {assignment: index for index, assignment in enumerate(domains)}
+    solution = min(
+        solutions,
+        key=lambda candidate: tuple(domain_index[candidate[index]] for index in order),
+    )
     return [
         {
             "subject": classes[index]["subject"],
             "teacher": classes[index]["teacher"],
             "group": classes[index]["group"],
-            "slot": schedule[index][0],
-            "room": schedule[index][1],
+            "slot": solution[index][0],
+            "room": solution[index][1],
         }
         for index in range(len(classes))
     ]
+
+
+def compatible_classes(first_class, second_class):
+    def compatible(first_assignment, second_assignment):
+        first_slot, first_room = first_assignment
+        second_slot, second_room = second_assignment
+        if first_slot != second_slot:
+            return True
+        return (
+            first_room != second_room
+            and first_class["teacher"] != second_class["teacher"]
+            and first_class["group"] != second_class["group"]
+        )
+
+    return compatible
 
 
 def conflict_degree(index, classes):

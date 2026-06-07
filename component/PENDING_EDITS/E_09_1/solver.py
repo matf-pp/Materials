@@ -1,4 +1,4 @@
-from itertools import permutations
+from constraint import AllDifferentConstraint, Problem
 
 
 LETTERS = ("M", "E", "N", "A", "D", "W", "O")
@@ -12,26 +12,33 @@ def number(word, assignment):
 
 
 def solve_man_and_women():
+    problem = Problem()
+    problem.addVariables(LETTERS, range(10))
+    problem.addConstraint(AllDifferentConstraint(), LETTERS)
+    problem.addConstraint(lambda m: m != 0, ("M",))
+    problem.addConstraint(lambda w: w != 0, ("W",))
+    problem.addConstraint(
+        lambda m, e, n, a, d, w, o: (100 * m + 10 * e + n) * (100 * a + 10 * n + d)
+        == 10000 * w + 1000 * o + 100 * m + 10 * e + n,
+        LETTERS,
+    )
+
     solutions = []
-
-    for digits in permutations(range(10), len(LETTERS)):
-        assignment = dict(zip(LETTERS, digits))
-        if assignment["M"] == 0 or assignment["W"] == 0:
-            continue
-
+    for assignment in sorted(
+        problem.getSolutions(),
+        key=lambda solution: tuple(solution[letter] for letter in LETTERS),
+    ):
         men = number("MEN", assignment)
         et = number("AND", assignment)
         women = number("WOMEN", assignment)
-
-        if men * et == women:
-            solutions.append(
-                {
-                    "assignment": assignment,
-                    "men": men,
-                    "et": et,
-                    "women": women,
-                    "equation": f"{men} + {et} = {women}",
-                }
-            )
+        solutions.append(
+            {
+                "assignment": assignment,
+                "men": men,
+                "et": et,
+                "women": women,
+                "equation": f"{men} * {et} = {women}",
+            }
+        )
 
     return solutions

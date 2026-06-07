@@ -1,42 +1,25 @@
+from constraint import AllDifferentConstraint, Problem
+
+
 def solve_n_queens(n):
     if n < 1:
         raise ValueError("Dimenzija table mora biti pozitivna.")
 
-    solutions = []
-    queens = []
-    used_columns = set()
-    used_main_diagonals = set()
-    used_side_diagonals = set()
+    rows = list(range(n))
+    problem = Problem()
+    problem.addVariables(rows, range(n))
+    problem.addConstraint(AllDifferentConstraint(), rows)
 
-    def search(row):
-        if row == n:
-            solutions.append(tuple(queens))
-            return
+    for first_row in rows:
+        for second_row in range(first_row + 1, n):
+            problem.addConstraint(
+                lambda first_column, second_column, row_delta=second_row
+                - first_row: abs(first_column - second_column) != row_delta,
+                (first_row, second_row),
+            )
 
-        for column in range(n):
-            main_diagonal = row - column
-            side_diagonal = row + column
-            if (
-                column in used_columns
-                or main_diagonal in used_main_diagonals
-                or side_diagonal in used_side_diagonals
-            ):
-                continue
-
-            queens.append(column)
-            used_columns.add(column)
-            used_main_diagonals.add(main_diagonal)
-            used_side_diagonals.add(side_diagonal)
-
-            search(row + 1)
-
-            queens.pop()
-            used_columns.remove(column)
-            used_main_diagonals.remove(main_diagonal)
-            used_side_diagonals.remove(side_diagonal)
-
-    search(0)
-    return solutions
+    solutions = problem.getSolutions()
+    return sorted(tuple(solution[row] for row in rows) for solution in solutions)
 
 
 def board_from_solution(solution):

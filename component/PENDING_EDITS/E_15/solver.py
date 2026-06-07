@@ -1,3 +1,6 @@
+from constraint import Problem
+
+
 REGIONS = ("Sever", "Zapad", "Centar", "Istok", "Jug", "Obala")
 EDGES = (
     ("Sever", "Zapad"),
@@ -19,32 +22,16 @@ def color_map(color_count):
         raise ValueError("Neispravan broj boja.")
 
     colors = COLORS[:color_count]
-    neighbors = {region: set() for region in REGIONS}
-    for first, second in EDGES:
-        neighbors[first].add(second)
-        neighbors[second].add(first)
+    problem = Problem()
+    problem.addVariables(REGIONS, colors)
+    for edge in EDGES:
+        problem.addConstraint(lambda first, second: first != second, edge)
 
-    order = sorted(REGIONS, key=lambda region: len(neighbors[region]), reverse=True)
-    assignment = {}
-    solutions = []
-
-    def search(index):
-        if index == len(order):
-            solutions.append({region: assignment[region] for region in REGIONS})
-            return
-
-        region = order[index]
-        used_neighbor_colors = {
-            assignment[neighbor]
-            for neighbor in neighbors[region]
-            if neighbor in assignment
-        }
-        for color in colors:
-            if color in used_neighbor_colors:
-                continue
-            assignment[region] = color
-            search(index + 1)
-            del assignment[region]
-
-    search(0)
-    return solutions
+    solutions = sorted(
+        problem.getSolutions(),
+        key=lambda solution: tuple(solution[region] for region in REGIONS),
+    )
+    return [
+        {region: solution[region] for region in REGIONS}
+        for solution in solutions
+    ]
