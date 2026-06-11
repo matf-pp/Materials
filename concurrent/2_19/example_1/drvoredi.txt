@@ -1,0 +1,3 @@
+tresnja,3,40
+kruska,2,35
+tresnja,1,50

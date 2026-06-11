@@ -1,0 +1,2 @@
+Ana,100,A-B:1;C-D:x;E-F:1;G-H:1;I-J:2
+Marko,200,A-B:2;C-D:x;E-F:2;G-H:x;I-J:x
