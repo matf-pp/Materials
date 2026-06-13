@@ -1,0 +1,1 @@
+solve(Vars):- Vars=[NumPy,Keras,Pandas,Seaborn,OpenCV], Vars::0..1, Seaborn#=<NumPy, OpenCV#=<Keras, OpenCV#=<Pandas, NumPy+Keras#=<1, Keras+Pandas#=<1, 3*NumPy+5*Keras+2*Pandas+4*Seaborn+3*OpenCV#=<15, NumPy+Keras+Pandas+Seaborn+OpenCV#>=2, labeling([maximize(2*NumPy+3*Keras+Pandas+2*Seaborn+3*OpenCV)], Vars), writeln(Vars).

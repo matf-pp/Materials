@@ -1,0 +1,8 @@
+id,impact.magnitude,impact.significance,location.depth,location.name,time.hour,time.minute,time.month,time.year
+nc72666881,1.42999999,31,15.119999,California,0,19,7,2016
+nc72666891,0.059999999,0,4.3899999999,California,0,31,7,2016
+nc72666896,0.400000000,2,1.09000000,California,0,35,7,2016
+nn00553447,0.2999999,1,7.59999999,Nevada,0,41,7,2016
+ak13805337,1.8,50,1.3,Alaska,0,52,7,2016
+ci37640584,1.2,22,0.1799999,California,1,3,7,2017
+nc72666901,1.66999999,43,12.91,California,1,4,7,2017

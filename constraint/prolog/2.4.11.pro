@@ -1,0 +1,1 @@
+solve(Vars):- Vars=[A,B,C,D,E,F,G], Vars::1..7, alldifferent(Vars), A+B+E+D#=<15, B+E+G+D#=<15, E+G+F+D#=<15, G+F+C+D#=<15, F+C+A+D#=<15, C+A+B+D#=<15, labeling([maximize(C+D+E),minimize(C*D*E)], Vars), writeln(Vars).
