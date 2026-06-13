@@ -1,12 +1,12 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QInputDialog
-from PyQt5 import uic
+from ui_main import Ui_NotesWindow
 
 
-class NotesApp(QMainWindow):
+class NotesApp(QMainWindow, Ui_NotesWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("main.ui", self)
+        self.setupUi(self)
 
         self.notes = {}
 
@@ -49,4 +49,3 @@ if __name__ == "__main__":
     window = NotesApp()
     window.show()
     sys.exit(app.exec_())
-

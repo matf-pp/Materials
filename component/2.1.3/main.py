@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5 import uic
+from ui_main import Ui_Form
 
 def fibonacci_generator():
     a, b = 0, 1
@@ -8,12 +8,11 @@ def fibonacci_generator():
         yield a
         a, b = b, a + b
 
-class FibonacciApp(QWidget):
+class FibonacciApp(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
 
-        # Load UI
-        uic.loadUi("main.ui", self)
+        self.setupUi(self)
 
         # Create generator
         self.fib_gen = fibonacci_generator()
@@ -30,4 +29,3 @@ if __name__ == "__main__":
     window = FibonacciApp()
     window.show()
     sys.exit(app.exec_())
-

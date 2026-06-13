@@ -1,11 +1,11 @@
 import sys, random
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-from PyQt5 import uic
+from ui_hangman import Ui_HangmanGame
 
-class HangmanGame(QMainWindow):
+class HangmanGame(QMainWindow, Ui_HangmanGame):
     def __init__(self):
         super().__init__()
-        uic.loadUi("hangman.ui", self)
+        self.setupUi(self)
 
         # Lista reči
         self.words = ["python", "programiranje", "kompjuter", "aplikacija", "tehnologija"]
@@ -64,4 +64,3 @@ if __name__ == "__main__":
     window = HangmanGame()
     window.show()
     sys.exit(app.exec_())
-

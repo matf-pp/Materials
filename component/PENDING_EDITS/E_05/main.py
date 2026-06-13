@@ -2,13 +2,13 @@ import sys
 from PyQt5.QtWidgets import (
     QApplication, QMainWindow, QLineEdit, QMessageBox
 )
-from PyQt5 import uic
+from ui_main import Ui_SudokuWindow
 
 
-class SudokuApp(QMainWindow):
+class SudokuApp(QMainWindow, Ui_SudokuWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("main.ui", self)
+        self.setupUi(self)
 
         self.cells = []  # 9x9 QLineEdit grid
         self.init_grid()
@@ -88,4 +88,3 @@ if __name__ == "__main__":
     win = SudokuApp()
     win.show()
     sys.exit(app.exec_())
-

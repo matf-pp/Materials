@@ -4,7 +4,7 @@ import sys, os, random, string, time
 
 __author__ = 'Milan Cugurovic & Ivan Ristovic, 2020.'
 
-class HackerApp(ui_4_04.Ui_MainWindow, QtWidgets.QMainWindow):
+class HackerApp(QtWidgets.QMainWindow, ui_4_04.Ui_MainWindow):
     def __init__(self):
         super(HackerApp, self).__init__()
         self.setupUi(self)

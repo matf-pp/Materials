@@ -1,16 +1,15 @@
 import sys
-from pathlib import Path
 
-from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QHeaderView, QTableWidgetItem, QWidget
+from ui_main import Ui_MapColoringForm
 
 from solver import REGIONS, color_map
 
 
-class MapColoringApp(QWidget):
+class MapColoringApp(QWidget, Ui_MapColoringForm):
     def __init__(self):
         super().__init__()
-        uic.loadUi(str(Path(__file__).with_name("main.ui")), self)
+        self.setupUi(self)
 
         self.tableSolutions.setColumnCount(len(REGIONS))
         self.tableSolutions.setHorizontalHeaderLabels(REGIONS)

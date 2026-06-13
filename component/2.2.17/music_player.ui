@@ -62,7 +62,11 @@
 
    <!-- Slider -->
    <item>
-    <widget class="QSlider" name="slider" orientation="Horizontal"/>
+    <widget class="QSlider" name="slider">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
    </item>
 
    <!-- Label -->
@@ -79,4 +83,3 @@
  <resources/>
  <connections/>
 </ui>
-

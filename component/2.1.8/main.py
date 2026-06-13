@@ -1,11 +1,12 @@
 import sys
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets
+from ui_main import Ui_MainWindow
 
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
 
-        uic.loadUi("main.ui", self)
+        self.setupUi(self)
 
         # Connect buttons
         self.btn_one.clicked.connect(lambda: self.update_status("Button One clicked"))
@@ -26,4 +27,3 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
-

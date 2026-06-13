@@ -1,13 +1,13 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5 import uic
+from ui_temperature_converter import Ui_TemperatureConverter
 
 
-class TemperatureConverter(QWidget):
+class TemperatureConverter(QWidget, Ui_TemperatureConverter):
     def __init__(self):
         super().__init__()
 
-        uic.loadUi("temperature_converter.ui", self)
+        self.setupUi(self)
 
         self.buttonConvert.clicked.connect(self.convert_temperature)
 
@@ -27,4 +27,3 @@ if __name__ == "__main__":
     window = TemperatureConverter()
     window.show()
     sys.exit(app.exec_())
-

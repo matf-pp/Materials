@@ -1,7 +1,5 @@
 import sys
-from pathlib import Path
 
-from PyQt5 import uic
 from PyQt5.QtWidgets import (
     QApplication,
     QHeaderView,
@@ -9,14 +7,15 @@ from PyQt5.QtWidgets import (
     QTableWidgetItem,
     QWidget,
 )
+from ui_main import Ui_KnapsackForm
 
 from solver import DEFAULT_ITEMS, optimize_knapsack
 
 
-class KnapsackApp(QWidget):
+class KnapsackApp(QWidget, Ui_KnapsackForm):
     def __init__(self):
         super().__init__()
-        uic.loadUi(str(Path(__file__).with_name("main.ui")), self)
+        self.setupUi(self)
 
         self.tableItems.setColumnCount(5)
         self.tableItems.setHorizontalHeaderLabels(

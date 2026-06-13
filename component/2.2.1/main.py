@@ -1,12 +1,11 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import uic
+from ui_palindrome import Ui_PalindromeChecker
 
-class PalindromeChecker(QMainWindow):
+class PalindromeChecker(QMainWindow, Ui_PalindromeChecker):
     def __init__(self):
         super().__init__()
-        # Učitavanje UI fajla
-        uic.loadUi("palindrome.ui", self)
+        self.setupUi(self)
 
         # Povezivanje dugmeta sa funkcijom
         self.btn_check.clicked.connect(self.check_palindrome)
@@ -24,4 +23,3 @@ if __name__ == "__main__":
     window = PalindromeChecker()
     window.show()
     sys.exit(app.exec_())
-

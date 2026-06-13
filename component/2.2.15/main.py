@@ -1,12 +1,12 @@
 import sys, random
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
-from PyQt5 import uic
 from PyQt5.QtCore import QTimer
+from ui_quick_reflex import Ui_QuickReflexGame
 
-class QuickReflexGame(QMainWindow):
+class QuickReflexGame(QMainWindow, Ui_QuickReflexGame):
     def __init__(self):
         super().__init__()
-        uic.loadUi("quick_reflex.ui", self)
+        self.setupUi(self)
 
         self.score = 0
         self.time_left = 10  # 10 sekundi igre
@@ -51,4 +51,3 @@ if __name__ == "__main__":
     window = QuickReflexGame()
     window.show()
     sys.exit(app.exec_())
-

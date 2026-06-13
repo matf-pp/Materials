@@ -1,13 +1,13 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import uic
 from PyQt5.QtGui import QTextCharFormat, QFont
+from ui_main import Ui_FormatterWindow
 
 
-class FormatterApp(QMainWindow):
+class FormatterApp(QMainWindow, Ui_FormatterWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("main.ui", self)
+        self.setupUi(self)
 
         self.boldButton.clicked.connect(self.toggle_bold)
         self.italicButton.clicked.connect(self.toggle_italic)
@@ -54,4 +54,3 @@ if __name__ == "__main__":
     win = FormatterApp()
     win.show()
     sys.exit(app.exec_())
-

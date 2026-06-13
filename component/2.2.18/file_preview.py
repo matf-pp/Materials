@@ -1,11 +1,12 @@
 import sys
-from PyQt5 import QtWidgets, uic, QtGui, QtCore
+from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import QFileDialog
+from ui_file_preview import Ui_FilePreview
 
-class FilePreview(QtWidgets.QWidget):
+class FilePreview(QtWidgets.QWidget, Ui_FilePreview):
     def __init__(self):
         super().__init__()
-        uic.loadUi('file_preview.ui', self)
+        self.setupUi(self)
 
         # Initially hide both previews
         self.textPreview.hide()
@@ -48,4 +49,3 @@ if __name__ == "__main__":
     window = FilePreview()
     window.show()
     sys.exit(app.exec_())
-

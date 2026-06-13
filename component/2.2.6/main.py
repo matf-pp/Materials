@@ -1,11 +1,11 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import uic
+from ui_char_counter import Ui_CharCounter
 
-class CharCounter(QMainWindow):
+class CharCounter(QMainWindow, Ui_CharCounter):
     def __init__(self):
         super().__init__()
-        uic.loadUi("char_counter.ui", self)
+        self.setupUi(self)
 
         # Povezivanje signala sa funkcijom
         self.te_input.textChanged.connect(self.update_count)
@@ -22,4 +22,3 @@ if __name__ == "__main__":
     window = CharCounter()
     window.show()
     sys.exit(app.exec_())
-

@@ -5,7 +5,7 @@ import re
 
 __author__ = 'Milan Cugurovic & Ivan Ristovic, 2020.'
 
-class CalculatorClass(ui_4_05.Ui_Calculator, QtWidgets.QMainWindow):
+class CalculatorClass(QtWidgets.QMainWindow, ui_4_05.Ui_Calculator):
     def __init__(self):
         super(CalculatorClass, self).__init__()
         self.setupUi(self)
@@ -87,4 +87,3 @@ if __name__ == "__main__":
     calculator = CalculatorClass()
     calculator.show()
     sys.exit(app.exec_())
-    

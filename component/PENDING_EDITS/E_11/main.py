@@ -1,7 +1,5 @@
 import sys
-from pathlib import Path
 
-from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (
     QApplication,
@@ -10,6 +8,7 @@ from PyQt5.QtWidgets import (
     QTableWidgetItem,
     QWidget,
 )
+from ui_main import Ui_SudokuForm
 
 from solver import solve_sudoku
 
@@ -27,10 +26,10 @@ EXAMPLE_GRID = [
 ]
 
 
-class SudokuApp(QWidget):
+class SudokuApp(QWidget, Ui_SudokuForm):
     def __init__(self):
         super().__init__()
-        uic.loadUi(str(Path(__file__).with_name("main.ui")), self)
+        self.setupUi(self)
 
         self.tableGrid.setRowCount(9)
         self.tableGrid.setColumnCount(9)

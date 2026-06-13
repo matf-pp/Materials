@@ -3,13 +3,13 @@ import string
 import secrets
 
 from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox
-from PyQt5.uic import loadUi
+from ui_password_generator import Ui_PasswordGenerator
 
 
-class PasswordGenerator(QWidget):
+class PasswordGenerator(QWidget, Ui_PasswordGenerator):
     def __init__(self):
         super().__init__()
-        loadUi("password_generator.ui", self)
+        self.setupUi(self)
 
         self.generateButton.clicked.connect(self.generate_password)
 
@@ -39,4 +39,3 @@ if __name__ == "__main__":
     window = PasswordGenerator()
     window.show()
     sys.exit(app.exec_())
-

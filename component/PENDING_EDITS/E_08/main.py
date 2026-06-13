@@ -1,16 +1,15 @@
 import sys
-from pathlib import Path
 
-from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QWidget
+from ui_main import Ui_MagicSequenceForm
 
 from solver import magic_sequences
 
 
-class MagicSequenceApp(QWidget):
+class MagicSequenceApp(QWidget, Ui_MagicSequenceForm):
     def __init__(self):
         super().__init__()
-        uic.loadUi(str(Path(__file__).with_name("main.ui")), self)
+        self.setupUi(self)
         self.buttonSolve.clicked.connect(self.solve)
         self.solve()
 

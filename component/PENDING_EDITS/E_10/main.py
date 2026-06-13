@@ -1,17 +1,16 @@
 import sys
-from pathlib import Path
 
-from PyQt5 import uic
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QHeaderView, QTableWidgetItem, QWidget
+from ui_main import Ui_QueensForm
 
 from solver import board_from_solution, solve_n_queens
 
 
-class QueensApp(QWidget):
+class QueensApp(QWidget, Ui_QueensForm):
     def __init__(self):
         super().__init__()
-        uic.loadUi(str(Path(__file__).with_name("main.ui")), self)
+        self.setupUi(self)
 
         self.solutions = []
         self.current_index = 0

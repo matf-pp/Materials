@@ -1,16 +1,15 @@
 import sys
-from pathlib import Path
 
-from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QHeaderView, QTableWidgetItem, QWidget
+from ui_main import Ui_CoinChangeForm
 
 from solver import COINS, coin_combinations
 
 
-class CoinChangeApp(QWidget):
+class CoinChangeApp(QWidget, Ui_CoinChangeForm):
     def __init__(self):
         super().__init__()
-        uic.loadUi(str(Path(__file__).with_name("main.ui")), self)
+        self.setupUi(self)
 
         self.tableResults.setColumnCount(len(COINS) + 1)
         self.tableResults.setHorizontalHeaderLabels(

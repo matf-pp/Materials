@@ -1,16 +1,16 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5.uic import loadUi
 from datetime import datetime
+from ui_main import Ui_Form
 
 
 # ----------------------------
 # Base class
 # ----------------------------
-class BaseWindow(QWidget):
+class BaseWindow(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
-        loadUi("main.ui", self)
+        self.setupUi(self)
 
         self.click_count = 0  # instance variable
 
@@ -76,4 +76,3 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
-

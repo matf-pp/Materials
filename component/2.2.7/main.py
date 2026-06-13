@@ -1,14 +1,14 @@
 import sys
 import random
 from PyQt5.QtWidgets import QApplication, QWidget
-from PyQt5 import uic
+from ui_guess_number import Ui_GuessNumber
 
 
-class GuessNumber(QWidget):
+class GuessNumber(QWidget, Ui_GuessNumber):
     def __init__(self):
         super().__init__()
 
-        uic.loadUi("guess_number.ui", self)
+        self.setupUi(self)
 
         self.secret_number = random.randint(1, 100)
         self.attempts = 0
@@ -52,4 +52,3 @@ if __name__ == "__main__":
     window = GuessNumber()
     window.show()
     sys.exit(app.exec_())
-

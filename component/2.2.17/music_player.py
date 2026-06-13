@@ -1,11 +1,12 @@
 import sys
-from PyQt5 import QtWidgets, uic, QtCore, QtMultimedia, QtGui
+from PyQt5 import QtWidgets, QtCore, QtMultimedia, QtGui
 from PyQt5.QtWidgets import QFileDialog
+from ui_music_player import Ui_MusicPlayer
 
-class MusicPlayer(QtWidgets.QWidget):
+class MusicPlayer(QtWidgets.QWidget, Ui_MusicPlayer):
     def __init__(self):
         super().__init__()
-        uic.loadUi('music_player.ui', self)
+        self.setupUi(self)
 
         # Initialize QMediaPlayer
         self.player = QtMultimedia.QMediaPlayer()
@@ -65,4 +66,3 @@ if __name__ == "__main__":
     window = MusicPlayer()
     window.show()
     sys.exit(app.exec_())
-

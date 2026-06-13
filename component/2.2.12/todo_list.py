@@ -1,11 +1,12 @@
 import sys, json
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
+from ui_todo_list import Ui_ToDoList
 
-class ToDoList(QtWidgets.QWidget):
+class ToDoList(QtWidgets.QWidget, Ui_ToDoList):
     def __init__(self):
         super().__init__()
-        uic.loadUi('todo_list.ui', self)
+        self.setupUi(self)
 
         # Connect buttons
         self.btnAdd.clicked.connect(self.add_task)
@@ -51,4 +52,3 @@ if __name__ == "__main__":
     window = ToDoList()
     window.show()
     sys.exit(app.exec_())
-

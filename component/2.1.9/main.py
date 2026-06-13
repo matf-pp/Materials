@@ -1,11 +1,12 @@
 import sys
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets
+from ui_main import Ui_GridWindow
 
 # Load the UI
-class GridWindow(QtWidgets.QWidget):
+class GridWindow(QtWidgets.QWidget, Ui_GridWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('main.ui', self)  # Load the .ui file
+        self.setupUi(self)
 
         # Optional: connect buttons to actions
         self.button1.clicked.connect(lambda: print("Button 1 clicked"))
@@ -14,9 +15,8 @@ class GridWindow(QtWidgets.QWidget):
         self.button4.clicked.connect(lambda: print("Button 4 clicked"))
         self.button5.clicked.connect(lambda: print("Button 5 clicked"))
 
-# Run the application
-app = QtWidgets.QApplication(sys.argv)
-window = GridWindow()
-window.show()
-sys.exit(app.exec_())
-
+if __name__ == "__main__":
+    app = QtWidgets.QApplication(sys.argv)
+    window = GridWindow()
+    window.show()
+    sys.exit(app.exec_())

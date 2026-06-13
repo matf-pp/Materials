@@ -1,14 +1,14 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 from PyQt5.QtCore import QTimer
-from PyQt5 import uic
+from ui_timer import Ui_TimerApp
 
 
-class TimerApp(QWidget):
+class TimerApp(QWidget, Ui_TimerApp):
     def __init__(self):
         super().__init__()
 
-        uic.loadUi("timer.ui", self)
+        self.setupUi(self)
 
         self.seconds = 0
 
@@ -35,4 +35,3 @@ if __name__ == "__main__":
     window = TimerApp()
     window.show()
     sys.exit(app.exec_())
-

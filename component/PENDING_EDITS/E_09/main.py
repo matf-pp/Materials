@@ -1,16 +1,15 @@
 import sys
-from pathlib import Path
 
-from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QHeaderView, QTableWidgetItem, QWidget
+from ui_main import Ui_CryptarithmForm
 
 from solver import LETTERS, solve_see_you_soon
 
 
-class CryptarithmApp(QWidget):
+class CryptarithmApp(QWidget, Ui_CryptarithmForm):
     def __init__(self):
         super().__init__()
-        uic.loadUi(str(Path(__file__).with_name("main.ui")), self)
+        self.setupUi(self)
 
         self.tableSolutions.setColumnCount(len(LETTERS) + 1)
         self.tableSolutions.setHorizontalHeaderLabels(list(LETTERS) + ["Jednacina"])

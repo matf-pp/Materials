@@ -1,16 +1,15 @@
 import sys
-from pathlib import Path
 
-from PyQt5 import uic
 from PyQt5.QtWidgets import QApplication, QHeaderView, QTableWidgetItem, QWidget
+from ui_main import Ui_TrainingPlannerForm
 
 from solver import COURSES, optimize_training
 
 
-class TrainingPlannerApp(QWidget):
+class TrainingPlannerApp(QWidget, Ui_TrainingPlannerForm):
     def __init__(self):
         super().__init__()
-        uic.loadUi(str(Path(__file__).with_name("main.ui")), self)
+        self.setupUi(self)
 
         self.tableCourses.setColumnCount(5)
         self.tableCourses.setHorizontalHeaderLabels(

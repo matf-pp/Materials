@@ -1,12 +1,12 @@
 import ui_4_03
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtWidgets import QFileDialog
+from PyQt5.QtWidgets import QFileDialog, QMessageBox
 import sys
 import os
 
 __author__ = 'Milan Cugurovic & Ivan Ristovic, 2020.'
 
-class SimplePadClass(ui_4_03.Ui_MainWindow, QtWidgets.QMainWindow):
+class SimplePadClass(QtWidgets.QMainWindow, ui_4_03.Ui_MainWindow):
     def __init__(self):
         super(SimplePadClass, self).__init__()
         self.setupUi(self)
@@ -67,11 +67,10 @@ class SimplePadClass(ui_4_03.Ui_MainWindow, QtWidgets.QMainWindow):
         if not path:
             return  # cancelled
         self.__save_util(path)
-    
+
 
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     simplePad = SimplePadClass()
     simplePad.show()
     sys.exit(app.exec_())
-    

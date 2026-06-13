@@ -1,12 +1,12 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow
-from PyQt5 import uic
+from ui_main import Ui_LoginWindow
 
 
-class LoginApp(QMainWindow):
+class LoginApp(QMainWindow, Ui_LoginWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi("main.ui", self)
+        self.setupUi(self)
 
         self.loginButton.clicked.connect(self.login)
 
@@ -28,4 +28,3 @@ if __name__ == "__main__":
     win = LoginApp()
     win.show()
     sys.exit(app.exec_())
-

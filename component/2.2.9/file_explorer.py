@@ -1,11 +1,12 @@
 import sys, os
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QTreeWidgetItem
+from ui_file_explorer import Ui_FileExplorer
 
-class FileExplorer(QtWidgets.QWidget):
+class FileExplorer(QtWidgets.QWidget, Ui_FileExplorer):
     def __init__(self):
         super().__init__()
-        uic.loadUi('file_explorer.ui', self)
+        self.setupUi(self)
 
         # Connect browse button
         self.btnBrowse.clicked.connect(self.browse_folder)
@@ -45,4 +46,3 @@ if __name__ == "__main__":
     window = FileExplorer()
     window.show()
     sys.exit(app.exec_())
-

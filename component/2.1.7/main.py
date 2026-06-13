@@ -1,12 +1,13 @@
 import sys
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QButtonGroup
+from ui_main import Ui_MainWindow
 
-class MainWindow(QtWidgets.QMainWindow):
+class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super().__init__()
 
-        uic.loadUi("main.ui", self)
+        self.setupUi(self)
 
         # Create a button group (recommended)
         self.group = QButtonGroup(self)
@@ -31,4 +32,3 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show()
     sys.exit(app.exec_())
-

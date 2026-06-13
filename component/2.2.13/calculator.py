@@ -1,10 +1,11 @@
 import sys
-from PyQt5 import QtWidgets, uic
+from PyQt5 import QtWidgets
+from ui_calculator import Ui_Calculator
 
-class Calculator(QtWidgets.QWidget):
+class Calculator(QtWidgets.QWidget, Ui_Calculator):
     def __init__(self):
         super().__init__()
-        uic.loadUi('calculator.ui', self)
+        self.setupUi(self)
 
         # Connect number buttons
         for i in range(10):
@@ -39,4 +40,3 @@ if __name__ == "__main__":
     window = Calculator()
     window.show()
     sys.exit(app.exec_())
-
