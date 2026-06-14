@@ -2,6 +2,7 @@ data Oblik = Krug Float | Trougao Float | Prav Float Float | Kvadrat Float
   deriving (Show)
 
 class PlanarniOblik a where
+  -- Klasa objedinjuje oblike nad kojima mogu da se racunaju obim i povrsina.
   obim :: a -> Float
   povrsina :: a -> Float
 
@@ -17,4 +18,5 @@ instance PlanarniOblik Oblik where
   povrsina (Kvadrat a) = a^2
 
 ukupnaP :: (PlanarniOblik a) => [a] -> Float
+-- Povrsine svih oblika se izracunaju mapiranjem, pa se zatim saberu.
 ukupnaP = sum . map povrsina

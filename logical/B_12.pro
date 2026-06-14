@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % mozemo kao u 4. zadatku pisati pomocni predikat ili uslov ispravnosti argumenta ubaciti u predikat direktno, za svako N < 1 izbaci3 vraca no i prekida program jer ce sve klauze biti netacne
 
 % bazni slucaj kad znamo rezultat

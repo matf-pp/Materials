@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 from constraint import ExactSumConstraint, Problem
 
 COINS = [('1 din', 1), ('2 din', 2), ('5 din', 5), ('10 din', 10), ('20 din', 20)]

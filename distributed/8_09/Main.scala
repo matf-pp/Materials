@@ -1,3 +1,4 @@
+// Komentar za studente: Spark transformacije grade RDD obradu, a akcije kao count, collect ili saveAsTextFile pokrecu izvrsavanje.
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD._
@@ -12,6 +13,7 @@ object Main {
 
       val sk = new SparkContext(konf)
 
+      // Kljuc RDD-a je godina; tako se sve temperature iste godine obradjuju zajedno.
       val tempRDD = sk.textFile("temperatureBoston.txt")
                       /**
                        * Pravimo torke (kljuc, vrednost) takve da je
@@ -59,6 +61,7 @@ object Main {
                        * Pravimo niz parova (kljuc, prosecnaTemperatura)
                        * */
                       .map( st => (st._1, st._2._1/st._2._2))
+                      // Godine su cetvorocifrene, pa leksikografsko sortiranje daje hronoloski redosled.
                       .sortByKey()
                       .collect()
                       .foreach( st => println("Godine "

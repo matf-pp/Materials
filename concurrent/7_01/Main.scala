@@ -1,4 +1,5 @@
 import java.io.File
+import java.util.concurrent.atomic.AtomicInteger
 import scala.io.Source
 
 object Main {
@@ -12,7 +13,11 @@ object Main {
 
   def nonEmptyLines(file: String): List[String] = readLines(file).map(_.trim).filter(_.nonEmpty)
 
+  def stdinTokens(): Array[String] =
+    Source.stdin.getLines().flatMap(_.trim.split("\\s+").filter(_.nonEmpty)).toArray
+
   def main(args: Array[String]): Unit = {
+    val workers = stdinTokens().headOption.map(_.toInt).getOrElse(1).max(1)
     val colorings = nonEmptyLines("ivans_coloring.data").map { line =>
       line
         .filter(c => c.isDigit || c == ',')
@@ -35,6 +40,19 @@ object Main {
         c(6) == 0 &&
         c(2) != 1
 
-    println(colorings.count(valid))
+    val count = new AtomicInteger(0)
+    // Svaka nit proverava svoj deo bojenja i uvecava zajednicki brojac.
+    val threads = (0 until workers).map { index =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          val from = index * colorings.length / workers
+          val until = (index + 1) * colorings.length / workers
+          count.addAndGet(colorings.slice(from, until).count(valid))
+        }
+      })
+    }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
+    println(count.get)
   }
 }

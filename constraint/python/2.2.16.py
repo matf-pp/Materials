@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 # 2.2.16: OSAKA + HAIKU + SUSHI = JAPAN
 from constraint import AllDifferentConstraint, Problem
 

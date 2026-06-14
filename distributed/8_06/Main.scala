@@ -1,3 +1,4 @@
+// Komentar za studente: Spark transformacije grade RDD obradu, a akcije kao count, collect ili saveAsTextFile pokrecu izvrsavanje.
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD._
@@ -12,6 +13,7 @@ object Main {
 
       val sk = new SparkContext(konf)
 
+      // Rezultat je mali, pa ga collect vraca iz klastera u glavni program za ispis.
       val poruke = sk.textFile("log.txt")
                       /**
                        * Filtriramo podatke tako da nam ostanu

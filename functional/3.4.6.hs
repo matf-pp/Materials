@@ -1,4 +1,5 @@
 class Serializable a where
+  -- Svaki tip koji je Serializable definise kako se zapisuje kao String.
   ser :: a -> String
 
 data Point = MkPoint Float Float
@@ -13,4 +14,5 @@ instance Serializable Point where
 
 instance Serializable WeatherInfo where
   ser (MkWeatherInfo p t) =
+    -- Ugnjezdeni podatak Point serijalizujemo pozivom iste funkcije ser.
     "{ 'loc': " ++ ser p ++ ", 'temp': " ++ show t ++ " }"

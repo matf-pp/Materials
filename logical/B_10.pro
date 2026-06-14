@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % baza znanja
 automobil(a1, audi).
 automobil(h1, honda).

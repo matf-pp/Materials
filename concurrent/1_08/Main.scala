@@ -41,16 +41,23 @@ object Main {
     }
   }
 
-  def csv(line: String): Array[String] = line.split(",", -1).map(_.trim)
   def pipe(line: String): Array[String] = line.split("\\|", -1).map(_.trim)
 
   def main(args: Array[String]): Unit = {
     val rows = nonEmptyLines("komande_izlaza.csv").map(pipe)
-    val results = rows.map { r =>
-      val pr = runCommand(r(1))
-      val first = pr.output.split("\\r?\\n").headOption.getOrElse("")
-      (r(0), pr.code, first)
+    val results = Array.fill(rows.length)(("", 0, ""))
+    // Rezultat svake komande ostaje vezan za njen ulazni indeks.
+    val threads = rows.zipWithIndex.map { case (row, index) =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          val pr = runCommand(row(1))
+          val first = pr.output.split("\\r?\\n").headOption.getOrElse("")
+          results(index) = (row(0), pr.code, first)
+        }
+      })
     }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
     println(s"Procesa: ${results.length}")
     println(s"Uspesnih procesa: ${results.count(_._2 == 0)}")
     println("Izlazi: " + results.map(r => s"${r._1}=${r._3}").mkString(", "))

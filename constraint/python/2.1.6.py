@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 from constraint import ExactSumConstraint, Problem
 
 def magic_sequences(n):

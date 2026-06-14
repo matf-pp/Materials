@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % menja elemente X i Y u listi 
 zameni(X, Y, [], []).
 zameni(X, Y, [X|R], [Y|R1]):- zameni(X, Y, R, R1), !.

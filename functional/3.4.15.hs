@@ -3,6 +3,7 @@ data Prozor = MkProzor { indP :: Int, naziv :: String }
 type Prozori = [Prozor]
 
 instance Eq Prozor where
+  -- Identifikator, a ne naziv, odredjuje da li su dva prozora ista.
   (MkProzor i1 _) == (MkProzor i2 _) = i1 == i2
 
 instance Ord Prozor where
@@ -15,6 +16,7 @@ otvori :: String -> Prozori -> Prozori
 otvori str lst =
   let ids = map indP lst
       newId = prviSlobodan 1 ids
+  -- Novi prozor dobija prvi pozitivan identifikator koji nije zauzet.
   in MkProzor newId str : lst
 
 prviSlobodan :: Int -> [Int] -> Int

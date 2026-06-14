@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 # 2.2.40: ONE + NINE + TWENTY + THIRTY + THIRTY = NINETY
 from constraint import AllDifferentConstraint, Problem
 

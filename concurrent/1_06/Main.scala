@@ -41,19 +41,26 @@ object Main {
     }
   }
 
-  def csv(line: String): Array[String] = line.split(",", -1).map(_.trim)
   def pipe(line: String): Array[String] = line.split("\\|", -1).map(_.trim)
   def fmtPairs[A, B](pairs: Iterable[(A, B)]): String = pairs.map { case (k, v) => s"$k=$v" }.mkString(", ")
 
   def main(args: Array[String]): Unit = {
     val rows = nonEmptyLines("bekapi.csv").map(pipe)
-    val statuses = rows.map { r =>
-      val id = r(0)
-      val cmd = r(1)
-      val timeout = r(2).toLong
-      val pr = runCommand(cmd, timeout)
-      id -> (if (pr.timedOut) "ROK" else pr.code.toString)
+    val statuses = Array.fill(rows.length)(("", ""))
+    // Svaka komanda ima svoju nit i svoj rok izvrsavanja.
+    val threads = rows.zipWithIndex.map { case (row, index) =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          val id = row(0)
+          val cmd = row(1)
+          val timeout = row(2).toLong
+          val pr = runCommand(cmd, timeout)
+          statuses(index) = id -> (if (pr.timedOut) "ROK" else pr.code.toString)
+        }
+      })
     }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
     println(s"Uspesnih procesa: ${statuses.count(_._2 == "0")}")
     println(s"Neuspesnih procesa: ${statuses.count(s => s._2 != "0" && s._2 != "ROK")}")
     println(s"Istekao rok: ${statuses.count(_._2 == "ROK")}")

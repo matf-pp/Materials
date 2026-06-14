@@ -4,6 +4,7 @@ data DnevniPodaci = DnevniPodatak
   } deriving (Show, Eq)
 
 suviDani :: [DnevniPodaci] -> [Int]
+-- Kompozicija prvo izdvaja dane bez padavina, zatim iz njih uzima temperature.
 suviDani = map temperatura . filter (\d -> padavine d == 0)
 
 rasponSuvihDana :: [DnevniPodaci] -> Int
@@ -20,5 +21,6 @@ stvarniOsecaj =
   map (\d ->
     let t = temperatura d
         p = padavine d
+        -- Padavine umanjuju temperaturu za 0.3 po jedinici padavina.
         newT = floor (fromIntegral t - 0.3 * fromIntegral p)
     in DnevniPodatak newT p)

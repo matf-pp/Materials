@@ -12,6 +12,7 @@ presek :: Ord a => [a] -> [a] -> [a]
 presek [] _ = []
 presek _ [] = []
 presek (x:xs) (y:ys)
+  -- Liste su sortirane: manji element se preskace, a jednak ulazi u presek.
   | x == y = x : presek xs ys
   | x < y = presek xs (y:ys)
   | otherwise = presek (x:xs) ys
@@ -26,4 +27,5 @@ top (x:_) = Just x
 pushMP :: Ord a => [a] -> [a] -> Stek a -> Stek a
 pushMP l1 l2 s =
   let p = presek l1 l2
+  -- Ako presek nije prazan, na stek ide najveci zajednicki element.
   in if null p then s else push s (maximum p)

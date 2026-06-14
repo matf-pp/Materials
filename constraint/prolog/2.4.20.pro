@@ -1,1 +1,2 @@
+% Komentar za studente: promenljive imaju konacne domene; ogranicenja su uslovi zadatka, a labeling pokrece pretragu resenja.
 solve(Vars):- Vars=[X12,X13,X14,X27,X32,X36,X43,X45,X58,X62,X65,X68,X76,X78], X12::0..3, X13::0..2, X14::0..3, X27::0..5, X32::0..1, X36::0..1, X43::0..2, X45::0..2, X58::0..5, X62::0..4, X65::0..2, X68::0..1, X76::0..2, X78::0..3, X12+X32+X62-X27#=0, X13+X43-X32-X36#=0, X14-X43-X45#=0, X45+X65-X58#=0, X36+X76-X62-X65-X68#=0, X27-X76-X78#=0, labeling([maximize(X12+X13+X14)], Vars), writeln(Vars).

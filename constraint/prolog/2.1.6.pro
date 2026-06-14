@@ -1,3 +1,4 @@
+% Komentar za studente: promenljive imaju konacne domene; ogranicenja su uslovi zadatka, a labeling pokrece pretragu resenja.
 solve(N, S) :-
     length(S, N),
     S :: 0..N-1,

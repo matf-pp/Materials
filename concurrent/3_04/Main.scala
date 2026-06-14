@@ -17,6 +17,9 @@ object Main {
     try lines.foreach(pw.println) finally pw.close()
   }
 
+  def stdinTokens(): Array[String] =
+    Source.stdin.getLines().flatMap(_.trim.split("\\s+").filter(_.nonEmpty)).toArray
+
   def main(args: Array[String]): Unit = {
     def readMatrix(file: String): Array[Array[Int]] = {
       val lines = nonEmptyLines(file)
@@ -29,10 +32,21 @@ object Main {
     val a = readMatrix("matrica_a.txt")
     val b = readMatrix("matrica_b.txt")
     val res = Array.ofDim[Int](a.length, b(0).length)
-    // Svaka celija rezultata je skalarni proizvod jedne vrste i jedne kolone.
-    for (i <- a.indices; j <- b(0).indices) {
-      res(i)(j) = (for (k <- b.indices) yield a(i)(k) * b(k)(j)).sum
+    val workers = stdinTokens().headOption.map(_.toInt).getOrElse(1).max(1)
+    // Svaka nit racuna disjunktan skup vrsta rezultujuce matrice.
+    val threads = (0 until workers).map { index =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          val from = index * a.length / workers
+          val until = (index + 1) * a.length / workers
+          for (i <- from until until; j <- b(0).indices) {
+            res(i)(j) = (for (k <- b.indices) yield a(i)(k) * b(k)(j)).sum
+          }
+        }
+      })
     }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
     writeLines("matrica_c.txt", res.map(_.mkString(" ")))
   }
 }

@@ -1,3 +1,4 @@
+// Komentar za studente: Spark transformacije grade RDD obradu, a akcije kao count, collect ili saveAsTextFile pokrecu izvrsavanje.
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD._
@@ -13,6 +14,7 @@ object Main {
 
       val sk = new SparkContext(konf)
       
+      // Linije se grupisu po marki uredjaja, pa se za svaku marku pravi izlazna datoteka.
       val transakcije = sk.textFile("uredjaji.txt")
                           /**
                            * Razdvajamo podatke o uredjajima
@@ -34,8 +36,9 @@ object Main {
                            * i u datoteku ime_marke.txt
                            * upisujemo podatke o transakcijama.
                            *
-                           * Parametar t u foreach konstrukciji predstavlja jedan par
-                           * (marka, niz_transakcija).
+                          * Parametar t u foreach konstrukciji predstavlja jedan par
+                          * (marka, niz_transakcija).
+                           * foreach je akcija: kod u bloku se izvrsava kada Spark pokrene posao.
                            * */
                           .foreach(t => {
                               val dat = new PrintWriter(new File(t._1.toLowerCase() + ".txt" ))

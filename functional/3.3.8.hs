@@ -3,6 +3,7 @@ data Prav = Prav Double Double
 data Kvadrat = Kvadrat Double
 
 class Oblik a where
+  -- Tip koji pripada klasi Oblik mora da zna da izracuna povrsinu i obim.
   povrsina :: a -> Double
   obim :: a -> Double
 

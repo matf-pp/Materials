@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 /*
 resenje je lista L sa 5 struktura oblika: d(ime, prezime, godine)
 */

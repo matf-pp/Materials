@@ -1,3 +1,4 @@
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QButtonGroup
@@ -9,18 +10,18 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.setupUi(self)
 
-        # Create a button group (recommended)
+        # Pravimo grupu dugmadi da se izbori medjusobno iskljucuju
         self.group = QButtonGroup(self)
         self.group.addButton(self.radio_A)
         self.group.addButton(self.radio_B)
         self.group.addButton(self.radio_C)
 
-        # Optional: assign IDs
+        # Dodeljujemo identifikatore za lakse citanje izbora
         self.group.setId(self.radio_A, 1)
         self.group.setId(self.radio_B, 2)
         self.group.setId(self.radio_C, 3)
 
-        # Connect signal
+        # Povezujemo signal sa funkcijom
         self.group.buttonToggled.connect(self.on_radio_toggled)
 
     def on_radio_toggled(self, button, checked):

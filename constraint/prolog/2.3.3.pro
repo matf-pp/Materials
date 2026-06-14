@@ -1,3 +1,4 @@
+% Komentar za studente: promenljive imaju konacne domene; ogranicenja su uslovi zadatka, a labeling pokrece pretragu resenja.
 solve(Vars) :-
     Vars = [A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S],
     Vars :: 1..19,

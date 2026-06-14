@@ -1,3 +1,4 @@
+// Komentar za studente: Spark transformacije grade RDD obradu, a akcije kao count, collect ili saveAsTextFile pokrecu izvrsavanje.
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD._
@@ -7,6 +8,7 @@ object Main {
 
   def main(args: Array[String]){
 
+      // Program nema ulaz sa tastature: svi podaci se citaju iz datoteke.
       val konf = new SparkConf()
         .setAppName("BrojPetocifrenih")
         .setMaster("local[4]")
@@ -25,6 +27,7 @@ object Main {
        * i prebrojavamo ih.
        * */
       val brojPetocifrenihBrojeva = datRDD.filter(_.length() == 5)
+                                          // count je akcija: tek ovde Spark pokrece izracunavanje.
                                           .count()
 
       sk.stop()

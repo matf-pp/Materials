@@ -7,6 +7,7 @@ takeCycled n lst = take n (cycle lst)
 dropUntil :: (a -> Bool) -> [a] -> [a]
 dropUntil _ [] = []
 dropUntil p (x:xs)
+  -- Kada prvi element zadovolji predikat, vracamo ostatak liste od tog mesta.
   | p x = x:xs
   | otherwise = dropUntil p xs
 
@@ -16,6 +17,7 @@ sumLst = foldl (+) 0
 split :: Char -> String -> [String]
 split _ "" = [""]
 split sep (c:cs)
+  -- Separator pocinje novu rec; inace znak dodajemo na prvu rec iz rekurzivnog rezultata.
   | c == sep = "" : rest
   | otherwise = (c : head rest) : tail rest
   where

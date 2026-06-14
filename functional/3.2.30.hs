@@ -9,6 +9,7 @@ mala s = all isLower s
 sifruj :: [String] -> [String]
 sifruj = map kodiraj
   where
+    -- Rec se obelezava prefiksom i sufiksom prema tome da li sadrzi samo cifre, mala slova ili ostalo.
     kodiraj s
       | broj s = 'C' : s ++ "C"
       | mala s = 'M' : s ++ "M"

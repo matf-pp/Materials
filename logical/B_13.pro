@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % pomocni predikat za proveru pripadnosti elementa listi
 sadrzi(X, [X|_]):- !.
 sadrzi(X, [G|R]):- G \== X, sadrzi(X, R).

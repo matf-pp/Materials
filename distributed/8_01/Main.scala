@@ -1,3 +1,4 @@
+// Komentar za studente: Spark transformacije grade RDD obradu, a akcije kao count, collect ili saveAsTextFile pokrecu izvrsavanje.
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD._
@@ -8,6 +9,8 @@ object Main {
 
     println("Unesite broj n:")
     val n = Console.readInt()
+
+    // Ulaz n odredjuje gornju granicu intervala iz kog uzimamo parne brojeve.
     /**
      * Podesavamo konfiguraciju Spark okruzenja
      * tako sto dajemo ime aplikaciji
@@ -43,6 +46,7 @@ object Main {
      * podesiti dinamicki (koriscenjem spark-submit skripte).
      * */
      
+    // Lokalno pravimo kolekciju parnih brojeva, pa je zatim saljemo u Spark.
     val niz = (2 to n by 2).toArray
 
     /**

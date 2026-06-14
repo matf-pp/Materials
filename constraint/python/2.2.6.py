@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 # 2.2.6: COMPLEX + LAPLACE = CALCULUS
 from constraint import AllDifferentConstraint, Problem
 

@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 mergeSort([], []).
 mergeSort([X], [X]).
 mergeSort(N, SL):- podeli(N, L, R),

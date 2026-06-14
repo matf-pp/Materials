@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % poredjenjem glava listi zakljucujemo u kom redosledu dodajemo elemente u spojenu listu
 spoji([], L, L):- !.
 spoji(L, [], L):- !.

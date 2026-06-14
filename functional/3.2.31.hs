@@ -11,6 +11,7 @@ desifruj = map obradi
   where
     obradi [] = []
     obradi s@(x:_)
+      -- Prvi karakter odredjuje koliko istih tipova karaktera skidamo sa pocetka.
       | isDigit x = drop (cifre s) s
       | isLower x = drop (mala s) s
       | otherwise = s

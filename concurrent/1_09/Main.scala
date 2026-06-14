@@ -14,16 +14,27 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val files = nonEmptyLines("datoteke_provere.txt")
-    var existing = 0; var missing = 0; var nonempty = 0; var chars = 0
-    files.foreach { f =>
-      val file = new File(f)
-      if (file.exists()) {
-        existing += 1
-        val c = readLines(f).map(_.length).sum
-        chars += c
-        if (c > 0) nonempty += 1
-      } else missing += 1
+    val results = Array.fill(files.length)((0, 0, 0, 0))
+    // Svaka putanja se proverava nezavisno, a zbir se racuna posle zavrsetka niti.
+    val threads = files.zipWithIndex.map { case (path, index) =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          val file = new File(path)
+          if (file.exists()) {
+            val c = readLines(path).map(_.length).sum
+            results(index) = (1, 0, if (c > 0) 1 else 0, c)
+          } else {
+            results(index) = (0, 1, 0, 0)
+          }
+        }
+      })
     }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
+    val existing = results.map(_._1).sum
+    val missing = results.map(_._2).sum
+    val nonempty = results.map(_._3).sum
+    val chars = results.map(_._4).sum
     println(s"Postojecih datoteka: $existing")
     println(s"Nedostajucih datoteka: $missing")
     println(s"Nepraznih datoteka: $nonempty")

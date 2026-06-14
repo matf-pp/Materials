@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % potreban nam je dodatni predikat za izdvajanje poslednjeg elementa liste
 izdvojPoslednji([G], G, []):- !.
 izdvojPoslednji([G|R], X, [G|R1]):- izdvojPoslednji(R, X, R1).

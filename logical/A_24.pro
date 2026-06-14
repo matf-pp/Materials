@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % maksimalni element liste
 maxEl([X], M):- M is X, !.
 % pozivamo za rep (idemo u dubinu), pa poredimo maksimalni element repa i glavu liste

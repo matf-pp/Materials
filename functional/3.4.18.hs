@@ -11,6 +11,7 @@ ponisti 'b' (r,g,_) = (r,g,0)
 ponisti _ x = x
 
 clamp :: Int -> Int
+-- RGB komponenta ne sme da predje 255.
 clamp x = min 255 x
 
 pomesaj :: (Int, Int, Int) -> (Int, Int, Int) -> (Int, Int, Int)
@@ -25,4 +26,5 @@ dodaj _ _ x = x
 
 lbFilter :: Char -> Int -> [(Int, Int, Int)] -> [(Int, Int, Int)]
 lbFilter k v lst =
+  -- Zadrzavamo samo boje cija izabrana komponenta ima bar zadatu vrednost.
   filter (\c -> komponenta k c >= v) lst

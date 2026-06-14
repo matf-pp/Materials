@@ -1,3 +1,4 @@
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
 import sys, json
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QMessageBox
@@ -8,11 +9,11 @@ class ToDoList(QtWidgets.QWidget, Ui_ToDoList):
         super().__init__()
         self.setupUi(self)
 
-        # Connect buttons
+        # Povezujemo dugmad sa funkcijama
         self.btnAdd.clicked.connect(self.add_task)
         self.btnDelete.clicked.connect(self.delete_task)
 
-        # Load tasks if file exists
+        # Ucitavamo zadatke ako datoteka postoji
         self.file_name = "tasks.json"
         self.load_tasks()
 

@@ -1,4 +1,5 @@
 import java.io.File
+import java.util.concurrent.locks.ReentrantReadWriteLock
 import scala.collection.mutable
 import scala.io.Source
 
@@ -17,10 +18,28 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val catalog = mutable.TreeMap[String, String]()
-    nonEmptyLines("katalog.txt").foreach { line =>
-      val p = line.split("\\s+", 3)
-      if (p(0) == "W" && p.length >= 3) catalog(p(1)) = p(2)
+    val lock = new ReentrantReadWriteLock()
+    val operations = nonEmptyLines("katalog.txt").map(_.split("\\s+", 3))
+    // Citanja dele bravu za citace, dok upisi zauzimaju iskljucivu bravu.
+    val threads = operations.map { parts =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          if (parts(0) == "R" && parts.length >= 2) {
+            val readLock = lock.readLock()
+            readLock.lock()
+            try catalog.get(parts(1))
+            finally readLock.unlock()
+          } else if (parts(0) == "W" && parts.length >= 3) {
+            val writeLock = lock.writeLock()
+            writeLock.lock()
+            try catalog(parts(1)) = parts(2)
+            finally writeLock.unlock()
+          }
+        }
+      })
     }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
     println("Katalog: " + fmtPairs(catalog))
   }
 }

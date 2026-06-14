@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 from constraint import Problem
 libs = {'NumPy': ([], ['Keras'], 3, 2), 'Keras': ([], ['NumPy','Pandas'], 5, 3), 'Pandas': ([], ['Keras'], 2, 1), 'Seaborn': (['NumPy'], [], 4, 2), 'OpenCV': (['Keras','Pandas'], [], 3, 3)}
 def main():

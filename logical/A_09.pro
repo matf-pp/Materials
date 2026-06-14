@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % ispis cifara unetog prirodnog broja N
 cifra(0, nula).
 cifra(1, jedan).

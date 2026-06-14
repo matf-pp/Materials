@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % Kompanija ParadigmeSolutions doo vrsi usluge programiranja aplikacija po zeljama korisnika. Stoga podrzavaju sirok spektar jezika i tehnologija. 
 % Cetiri Tim Leada ove kompanije Vukasin, Lazar, Nemanja i Milica ne samo da programiraju u razlicitim jezicima vec koriste i razlicite editore. 
 % Za svakog team lida potrebno je otkriti ime, prezime, omiljeni jezik i omiljeni editor. 

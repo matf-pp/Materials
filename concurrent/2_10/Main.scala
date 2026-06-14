@@ -18,29 +18,33 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val stock = mutable.TreeMap[String, Int]()
-    nonEmptyLines("stanje_skladista.csv").foreach { l => val r = csv(l); stock(r(0)) = r(1).toInt }
-    val pending = mutable.Queue[(String, Int)]()
+    nonEmptyLines("stanje_skladista.csv").foreach { line =>
+      val row = csv(line)
+      stock(row(0)) = row(1).toInt
+    }
+    val monitor = new Object
     var executed = 0
-
-    def tryPending(): Unit = {
-      var changed = true
-      while (changed) {
-        changed = false
-        val rest = mutable.Queue[(String, Int)]()
-        while (pending.nonEmpty) {
-          val (item, qty) = pending.dequeue()
-          if (stock.getOrElse(item, 0) >= qty) { stock(item) = stock(item) - qty; executed += 1; changed = true }
-          else rest.enqueue((item, qty))
+    val operations = nonEmptyLines("operacije_skladista.csv").map(csv)
+    // Rezervacije cekaju na monitoru dok dopuna ne obezbedi dovoljno komada.
+    val threads = operations.map { row =>
+      new Thread(new Runnable {
+        def run(): Unit = monitor.synchronized {
+          val typ = row(0)
+          val item = row(2)
+          val qty = row(3).toInt
+          if (typ == "DOD") {
+            stock(item) = stock.getOrElse(item, 0) + qty
+            monitor.notifyAll()
+          } else {
+            while (stock.getOrElse(item, 0) < qty) monitor.wait()
+            stock(item) = stock(item) - qty
+            executed += 1
+          }
         }
-        pending.enqueueAll(rest)
-      }
+      })
     }
-    nonEmptyLines("operacije_skladista.csv").foreach { l =>
-      val r = csv(l); val typ = r(0); val item = r(2); val qty = r(3).toInt
-      if (typ == "DOD") { stock(item) = stock.getOrElse(item, 0) + qty; tryPending() }
-      else if (stock.getOrElse(item, 0) >= qty) { stock(item) = stock(item) - qty; executed += 1 }
-      else pending.enqueue((item, qty))
-    }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
     println(s"Izvrseno rezervacija: $executed")
     println("Preostalo: " + fmtPairs(stock))
   }

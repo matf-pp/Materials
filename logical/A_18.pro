@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 /*
 Lista - niz uredjenih elemenata, tj. termova.
 Lista moze biti:

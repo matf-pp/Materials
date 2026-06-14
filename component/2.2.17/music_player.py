@@ -1,3 +1,4 @@
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
 import sys
 from PyQt5 import QtWidgets, QtCore, QtMultimedia, QtGui
 from PyQt5.QtWidgets import QFileDialog
@@ -8,31 +9,31 @@ class MusicPlayer(QtWidgets.QWidget, Ui_MusicPlayer):
         super().__init__()
         self.setupUi(self)
 
-        # Initialize QMediaPlayer
+        # Pravimo QMediaPlayer objekat za reprodukciju
         self.player = QtMultimedia.QMediaPlayer()
 
-        # Set button icons
+        # Postavljamo ikonice na dugmad
         self.btnPlay.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_MediaPlay))
         self.btnPause.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_MediaPause))
         self.btnStop.setIcon(self.style().standardIcon(QtWidgets.QStyle.SP_MediaStop))
 
-        # Make icons fill the buttons
+        # Podesavamo da ikonice popune dugmad
         self.btnPlay.setIconSize(QtCore.QSize(40, 40))
         self.btnPause.setIconSize(QtCore.QSize(40, 40))
         self.btnStop.setIconSize(QtCore.QSize(40, 40))
 
-        # Optional: make buttons square
+        # Dugmad pravimo kvadratnim radi urednog prikaza
         self.btnPlay.setFixedSize(50, 50)
         self.btnPause.setFixedSize(50, 50)
         self.btnStop.setFixedSize(50, 50)
 
-        # Connect buttons
+        # Povezujemo dugmad sa funkcijama
         self.btnLoad.clicked.connect(self.load_music)
         self.btnPlay.clicked.connect(self.play_music)
         self.btnPause.clicked.connect(self.pause_music)
         self.btnStop.clicked.connect(self.stop_music)
 
-        # Slider connections
+        # Povezujemo klizace sa plejerom
         self.slider.sliderMoved.connect(self.set_position)
         self.player.positionChanged.connect(self.update_slider)
         self.player.durationChanged.connect(self.set_slider_range)

@@ -43,7 +43,17 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val commands = nonEmptyLines("procesi_status.txt")
-    val codes = commands.map(runCommand(_).code)
+    val codes = new Array[Int](commands.length)
+    // Svaka nit pokrece jednu proveru i upisuje izlazni kod na svoj indeks.
+    val threads = commands.zipWithIndex.map { case (command, index) =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          codes(index) = runCommand(command).code
+        }
+      })
+    }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
     println(s"Uspesnih procesa: ${codes.count(_ == 0)}")
     println(s"Neuspesnih procesa: ${codes.count(_ != 0)}")
     println("Statusi: " + codes.zipWithIndex.map { case (c, i) => s"${i + 1}=$c" }.mkString(", "))

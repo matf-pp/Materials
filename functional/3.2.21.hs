@@ -1,5 +1,6 @@
 ubaci :: Int -> a -> [a] -> [a]
 ubaci _ e [] = [e]
+-- foldr cuva redosled liste; kada stigne do indeksa k, dodaje novi element pre postojeceg.
 ubaci k e xs = foldr (\(i,x) acc -> if i == k then e : x : acc else x : acc) [] 
              $ zip [0..] xs 
 

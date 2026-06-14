@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 # 2.2.18: SHE + KNOWS + HOW + IT = WORKS
 from constraint import AllDifferentConstraint, Problem
 

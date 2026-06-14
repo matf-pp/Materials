@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % fail ce prouzrokovati da 2. klauza uvek bude netacna jer zelimo da se poziv predikata za neispravan argument vidi kao netacna cinjenica u bazi 
 provera(N):- N > 0.
 provera(N):- N =< 0, write('Broj nije prirodan'), nl, fail.

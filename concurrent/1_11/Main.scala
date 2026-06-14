@@ -18,9 +18,20 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val rows = nonEmptyLines("obavestenja_spawn.csv").map(csv)
+    val sent = Array.fill(rows.length)(("", false))
+    // Niti samo upisuju lokalni ishod slanja; agregacija je posle njihovog zavrsetka.
+    val threads = rows.zipWithIndex.map { case (row, index) =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          sent(index) = (row(1), row(2) == "VISOK")
+        }
+      })
+    }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
     val byChannel = mutable.TreeMap[String, Int]().withDefaultValue(0)
-    var high = 0
-    rows.foreach { r => byChannel(r(1)) += 1; if (r(2) == "VISOK") high += 1 }
+    sent.foreach { case (channel, _) => byChannel(channel) += 1 }
+    val high = sent.count(_._2)
     println(s"Poslato obavestenja: ${rows.length}")
     println(s"Visokog prioriteta: $high")
     println("Po kanalima: " + fmtPairs(byChannel))

@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 /*
 strukturama oblika k(boja, nacionalnost, jelo, pice, kucniLjubimac) opisujemo date cinjenice, a u listi L su kuce poredjane jedna pored druge, tako da po redosledu u listi imamo informaciju da li je kuca desno od neke druge kuce i da li su kuce jedna pored druge
 */

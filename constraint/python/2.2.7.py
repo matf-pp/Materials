@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 # 2.2.7: THIS + IS + VERY = EASY
 from constraint import AllDifferentConstraint, Problem
 

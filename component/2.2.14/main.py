@@ -1,4 +1,5 @@
-# main.py
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
+# Glavni fajl aplikacije
 import sys
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtSvg import QSvgWidget

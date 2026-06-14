@@ -1,6 +1,14 @@
 import java.io.File
+import java.util.concurrent.Semaphore
 import scala.collection.mutable
 import scala.io.Source
+
+case class HostState(semaphore: Semaphore, expectedPeak: Int) {
+  val lock = new Object
+  var active: Int = 0
+  var maxActive: Int = 0
+  var peakReached: Boolean = expectedPeak == 0
+}
 
 object Main {
   def readLines(file: String): List[String] = {
@@ -21,13 +29,44 @@ object Main {
   def fmtPairs[A, B](pairs: Iterable[(A, B)]): String = pairs.map { case (k, v) => s"$k=$v" }.mkString(", ")
 
   def main(args: Array[String]): Unit = {
-    val limit = stdinTokens()(0).toInt
+    val limit = stdinTokens()(0).toInt.max(1)
     val rows = nonEmptyLines("preuzimanja.csv").map(csv)
-    val byHost = mutable.TreeMap[String, Int]().withDefaultValue(0)
-    var mb = 0
-    rows.foreach { r => byHost(r(0)) += 1; mb += r(2).toInt }
+    // Broj redova po hostu nam govori koliki paralelizam uopste moze da se dostigne.
+    val countsByHost = rows.groupBy(_(0)).map { case (host, hostRows) => host -> hostRows.length }
+    val states = countsByHost.map { case (host, count) =>
+      host -> HostState(new Semaphore(limit), Math.min(limit, count))
+    }
+    // Svaki host ima sopstveni semafor i sopstveno merenje najveceg paralelizma.
+    val threads = rows.map { row =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          val state = states(row(0))
+          state.semaphore.acquire()
+          try {
+            state.lock.synchronized {
+              state.active += 1
+              state.maxActive = Math.max(state.maxActive, state.active)
+              if (state.active >= state.expectedPeak) {
+                state.peakReached = true
+                state.lock.notifyAll()
+              }
+              while (!state.peakReached && state.active < state.expectedPeak) state.lock.wait()
+            }
+            state.lock.synchronized {
+              state.active -= 1
+              state.lock.notifyAll()
+            }
+          } finally state.semaphore.release()
+        }
+      })
+    }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
+    val byHost = mutable.TreeMap[String, Int]()
+    states.foreach { case (host, state) => byHost(host) = state.maxActive }
+    val mb = rows.map(_(2).toInt).sum
     println(s"Preuzeto datoteka: ${rows.length}")
     println(s"Ukupno MB: $mb")
-    println("Najvise po hostu: " + fmtPairs(byHost.map { case (h, c) => h -> Math.min(limit, c) }))
+    println("Najvise po hostu: " + fmtPairs(byHost))
   }
 }

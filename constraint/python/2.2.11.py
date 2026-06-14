@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 # 2.2.11: EARTH + AIR + FIRE + WATER = NATURE
 from constraint import AllDifferentConstraint, Problem
 

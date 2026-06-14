@@ -1,3 +1,4 @@
+% Komentar za studente: promenljive imaju konacne domene; ogranicenja su uslovi zadatka, a labeling pokrece pretragu resenja.
 candidate(Broj, Kolicnik) :-
     Vars = [A,B,C],
     A :: 1..9,

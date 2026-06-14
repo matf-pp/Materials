@@ -46,7 +46,7 @@ class Ui_Calculator(object):
         self.gridLayout.addWidget(self.btn5, 1, 1, 1, 1)
         self.btn6 = QtWidgets.QPushButton(self.buttonWidget)
         self.btn6.setObjectName("btn6")
-        self.gridLayout.addWidget(self.btn6, 1, 2, 1, 1[?1;2;4c)
+        self.gridLayout.addWidget(self.btn6, 1, 2, 1, 1)
         self.btnMul = QtWidgets.QPushButton(self.buttonWidget)
         self.btnMul.setObjectName("btnMul")
         self.gridLayout.addWidget(self.btnMul, 1, 3, 1, 1)

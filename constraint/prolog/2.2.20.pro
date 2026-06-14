@@ -1,3 +1,4 @@
+% Komentar za studente: promenljive imaju konacne domene; ogranicenja su uslovi zadatka, a labeling pokrece pretragu resenja.
 % 2.2.20: THREE + THREE + ONE = SEVEN
 
 solve(Vars) :-

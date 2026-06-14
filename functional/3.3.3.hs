@@ -7,5 +7,6 @@ instance Show Pravougaonik where
         "(" ++ show a ++ "," ++ show b ++ ")"
 
 instance Eq Pravougaonik where
+    -- Pravougaonici su jednaki i kada su im stranice zamenjene.
     (==) (MkPravougaonik a1 b1) (MkPravougaonik a2 b2) = 
         a1 == a2 && b1 == b2 || a1 == b2 && b1 == a2

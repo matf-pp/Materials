@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % podeli1 - deli listu na dve liste - listu pozitivnih i listu negativnih elemenata
 % L1 - lista pozitivnih, L2 - lista negativnih
 podeli([], [], []).

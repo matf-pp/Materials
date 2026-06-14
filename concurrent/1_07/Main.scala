@@ -14,10 +14,18 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val files = nonEmptyLines("datoteke.txt")
-    val totals = files.map { f =>
-      val ls = readLines(f)
-      (1, ls.length, ls.map(_.length).sum)
+    val totals = Array.fill(files.length)((0, 0, 0))
+    // Obrada jedne datoteke ne deli stanje sa obradom druge datoteke.
+    val threads = files.zipWithIndex.map { case (file, index) =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          val lines = readLines(file)
+          totals(index) = (1, lines.length, lines.map(_.length).sum)
+        }
+      })
     }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
     println(s"Ukupno datoteka: ${totals.map(_._1).sum}")
     println(s"Ukupno linija: ${totals.map(_._2).sum}")
     println(s"Ukupno znakova: ${totals.map(_._3).sum}")

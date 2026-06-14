@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 from constraint import AllDifferentConstraint, ExactSumConstraint, Problem
 
 LINES = ['abc', 'def', 'ghi', 'adg', 'beh', 'cfi', 'aei', 'ceg']

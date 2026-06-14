@@ -1,3 +1,4 @@
+% Komentar za studente: promenljive imaju konacne domene; ogranicenja su uslovi zadatka, a labeling pokrece pretragu resenja.
 % 2.2.42: COGITO = ERGO * SUM
 
 solve(Vars) :-

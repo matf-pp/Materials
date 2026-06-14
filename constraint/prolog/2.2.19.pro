@@ -1,3 +1,4 @@
+% Komentar za studente: promenljive imaju konacne domene; ogranicenja su uslovi zadatka, a labeling pokrece pretragu resenja.
 % 2.2.19: COPY + PASTE + SAVE = TOOLS
 
 solve(Vars) :-

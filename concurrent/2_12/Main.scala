@@ -1,5 +1,6 @@
 import java.io.File
-import scala.collection.mutable
+import java.util.concurrent.ConcurrentSkipListSet
+import java.util.concurrent.atomic.AtomicInteger
 import scala.io.Source
 
 object Main {
@@ -16,14 +17,31 @@ object Main {
   def csv(line: String): Array[String] = line.split(",", -1).map(_.trim)
 
   def main(args: Array[String]): Unit = {
-    val reserved = mutable.TreeSet[String]()
-    var okCount = 0; var badCount = 0
-    nonEmptyLines("rezervacije_sedista.csv").foreach { l =>
-      val r = csv(l); val seat = r(2)
-      if (reserved.contains(seat)) badCount += 1 else { reserved += seat; okCount += 1 }
+    val rows = nonEmptyLines("rezervacije_sedista.csv").map(csv)
+    val reserved = new ConcurrentSkipListSet[String]()
+    val locks = rows.map(row => row(2)).distinct.map(_ -> new Object).toMap
+    val okCount = new AtomicInteger(0)
+    val badCount = new AtomicInteger(0)
+    // Svako sediste ima svoj monitor, pa nezavisna sedista ne blokiraju jedno drugo.
+    val threads = rows.map { row =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          val seat = row(2)
+          locks(seat).synchronized {
+            if (reserved.contains(seat)) badCount.incrementAndGet()
+            else {
+              reserved.add(seat)
+              okCount.incrementAndGet()
+            }
+          }
+        }
+      })
     }
-    println(s"Prihvaceno rezervacija: $okCount")
-    println(s"Odbijeno rezervacija: $badCount")
-    println("Zauzeta sedista: " + reserved.mkString(", "))
+    threads.foreach(_.start())
+    threads.foreach(_.join())
+    println(s"Prihvaceno rezervacija: ${okCount.get}")
+    println(s"Odbijeno rezervacija: ${badCount.get}")
+    val orderedSeats = rows.map(_(2)).distinct.sorted.filter(reserved.contains)
+    println("Zauzeta sedista: " + orderedSeats.mkString(", "))
   }
 }

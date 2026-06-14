@@ -1,3 +1,4 @@
+// Komentar za studente: Spark transformacije grade RDD obradu, a akcije kao count, collect ili saveAsTextFile pokrecu izvrsavanje.
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD._
@@ -14,6 +15,7 @@ object Main {
 
       val knjigaRDD = sk.textFile("knjiga.txt")
 
+      // Svaka transformacija vraca novi RDD; upis se izvrsava tek na saveAsTextFile.
       /**
        * Ucitavamo linije i razlazemo ih separatorom " " tako da dobjemo niz reci
        */

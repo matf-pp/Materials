@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 # 2.2.5: SIX + SIX + SIX = NINE + NINE
 from constraint import AllDifferentConstraint, Problem
 

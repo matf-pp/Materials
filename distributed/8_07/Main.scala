@@ -1,3 +1,4 @@
+// Komentar za studente: Spark transformacije grade RDD obradu, a akcije kao count, collect ili saveAsTextFile pokrecu izvrsavanje.
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD._
@@ -17,6 +18,7 @@ object Main {
        * */
       val preuzimanja = sk.textFile("mavenLog.txt")
                           .cache()
+      // Isti RDD koristimo dva puta, pa cache izbegava ponovno citanje datoteke.
       /**
        * Racunamo broj zapocetih preuzimanja.
        * */

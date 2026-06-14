@@ -5,11 +5,13 @@ poklapanjeShow (Od c p) = [c] ++ " (" ++ show p ++ ")"
 
 poklapanjeM :: Int -> String -> Maybe Poklapanje
 poklapanjeM i str
+  -- Maybe verzija ne objasnjava gresku, vec samo vraca Nothing za neispravan indeks.
   | i < 0 || i >= length str = Nothing
   | otherwise = Just (Od (str !! i) i)
 
 poklapanjeE :: Int -> String -> Either String Poklapanje
 poklapanjeE i str
+  -- Either verzija u Left grani cuva poruku o gresci.
   | i < 0 || i >= length str = Left "Index error"
   | otherwise = Right (Od (str !! i) i)
 

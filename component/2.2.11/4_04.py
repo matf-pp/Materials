@@ -1,3 +1,4 @@
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
 from PyQt5 import QtCore, QtGui, QtWidgets
 import ui_4_04
 import sys, os, random, string, time
@@ -9,7 +10,7 @@ class HackerApp(QtWidgets.QMainWindow, ui_4_04.Ui_MainWindow):
         super(HackerApp, self).__init__()
         self.setupUi(self)
 
-        # Start button
+        # Dugme za pokretanje
         self.start.clicked.connect(self.pressed)
 
     def pressed(self):

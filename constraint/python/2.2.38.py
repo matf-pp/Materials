@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 # 2.2.38: FIVE + FIVE + TEN + TEN + TEN + TEN + THIRTY = EIGHTY
 from constraint import AllDifferentConstraint, Problem
 

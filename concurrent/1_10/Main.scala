@@ -41,26 +41,32 @@ object Main {
     }
   }
 
-  def csv(line: String): Array[String] = line.split(",", -1).map(_.trim)
   def pipe(line: String): Array[String] = line.split("\\|", -1).map(_.trim)
 
   def main(args: Array[String]): Unit = {
     val rows = nonEmptyLines("komande_retry.csv").map(pipe)
-    var successes = 0
-    var failures = 0
-    var attemptsTotal = 0
-    rows.foreach { r =>
-      val maxAttempts = r(2).toInt
-      var attempt = 0
-      var okDone = false
-      while (attempt < maxAttempts && !okDone) {
-        attempt += 1
-        val pr = runCommand(r(1))
-        if (pr.code == 0) okDone = true
-      }
-      attemptsTotal += attempt
-      if (okDone) successes += 1 else failures += 1
+    val results = Array.fill(rows.length)((false, 0))
+    // Pokusaji jedne komande su redom u istoj niti; razlicite komande teku nezavisno.
+    val threads = rows.zipWithIndex.map { case (row, index) =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          val maxAttempts = row(2).toInt
+          var attempt = 0
+          var okDone = false
+          while (attempt < maxAttempts && !okDone) {
+            attempt += 1
+            val pr = runCommand(row(1))
+            if (pr.code == 0) okDone = true
+          }
+          results(index) = (okDone, attempt)
+        }
+      })
     }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
+    val successes = results.count(_._1)
+    val failures = results.length - successes
+    val attemptsTotal = results.map(_._2).sum
     println(s"Komandi: ${rows.length}")
     println(s"Uspesno: $successes")
     println(s"Neuspesno: $failures")

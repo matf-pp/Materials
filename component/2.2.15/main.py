@@ -1,3 +1,4 @@
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
 import sys, random
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from PyQt5.QtCore import QTimer
@@ -22,7 +23,7 @@ class QuickReflexGame(QMainWindow, Ui_QuickReflexGame):
 
         self.btn_click.clicked.connect(self.button_clicked)
 
-        # Start igre odmah
+        # Pokrecemo igru odmah
         self.move_timer.start(500)
 
     def move_button(self):

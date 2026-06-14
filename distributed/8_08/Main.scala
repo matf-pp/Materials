@@ -1,3 +1,4 @@
+// Komentar za studente: Spark transformacije grade RDD obradu, a akcije kao count, collect ili saveAsTextFile pokrecu izvrsavanje.
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 import org.apache.spark.rdd.RDD._
@@ -13,6 +14,7 @@ object Main {
 
       val sk = new SparkContext(konf)
 
+      // Uzorkovanje se radi nad filtriranim RDD-om, a rezultat se vraca kao lokalni niz.
       /**
        * Pronalazimo liniju koja sadrzi radnika programera,
        * razdvajamo podatke o jednom radniku

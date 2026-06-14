@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 # 2.4.6: ((JE + PENSE) - DONC) + JE = SUIS
 from constraint import AllDifferentConstraint, Problem
 

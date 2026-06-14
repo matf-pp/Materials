@@ -1,3 +1,4 @@
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
 import sys
 from PyQt5 import QtWidgets
 from ui_main import Ui_MainWindow
@@ -8,7 +9,7 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.setupUi(self)
 
-        # Connect button
+        # Povezujemo dugme sa funkcijom
         self.pushButton.clicked.connect(self.show_selected)
 
     def show_selected(self):

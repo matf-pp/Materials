@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 /*
 za odredjivanje nzd i nzs dva prirodna broja koristicemo Euklidov algoritam 
 

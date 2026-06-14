@@ -1,3 +1,4 @@
+# Komentar za studente: promenljive predstavljaju nepoznate vrednosti, domeni dozvoljene kandidate, a ogranicenja opisuju uslove zadatka.
 # 2.4.7: MANET + MATISSE + MIRO + MONET + RENOIR = ARTISTS
 from constraint import AllDifferentConstraint, Problem
 

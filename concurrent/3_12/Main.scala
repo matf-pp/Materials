@@ -20,16 +20,32 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     val t = stdinTokens().map(_.toInt)
+    val workers = t(0).max(1)
     val threshold = t(1)
-    var value = 0
-    var low = 0
+    val rows = nonEmptyLines("zalihe.csv").map(csv)
+    val partial = Array.fill(workers)((0, 0))
 
-    nonEmptyLines("zalihe.csv").foreach { line =>
-      val row = csv(line)
-      val qty = row(1).toInt
-      value += qty * row(2).toInt
-      if (qty < threshold) low += 1
+    // Svaka nit vraca vrednost zaliha i broj niskih stanja za svoj blok.
+    val threads = (0 until workers).map { index =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          val from = index * rows.length / workers
+          val until = (index + 1) * rows.length / workers
+          var value = 0
+          var low = 0
+          rows.slice(from, until).foreach { row =>
+            val qty = row(1).toInt
+            value += qty * row(2).toInt
+            if (qty < threshold) low += 1
+          }
+          partial(index) = (value, low)
+        }
+      })
     }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
+    val value = partial.map(_._1).sum
+    val low = partial.map(_._2).sum
     println(s"Vrednost zaliha: $value")
     println(s"Nisko stanje: $low")
   }

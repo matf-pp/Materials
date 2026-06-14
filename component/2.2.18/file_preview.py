@@ -1,3 +1,4 @@
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
 import sys
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import QFileDialog
@@ -8,11 +9,11 @@ class FilePreview(QtWidgets.QWidget, Ui_FilePreview):
         super().__init__()
         self.setupUi(self)
 
-        # Initially hide both previews
+        # Na pocetku sakrivamo oba pregleda
         self.textPreview.hide()
         self.imagePreview.hide()
 
-        # Connect button
+        # Povezujemo dugme sa funkcijom
         self.btnLoad.clicked.connect(self.load_file)
 
     def load_file(self):
@@ -22,7 +23,7 @@ class FilePreview(QtWidgets.QWidget, Ui_FilePreview):
             ext = file_path.split('.')[-1].lower()
 
             if ext in ['txt', 'py', 'md', 'csv', 'log']:
-                # Show text preview
+                # Prikazujemo tekstualni pregled
                 self.imagePreview.hide()
                 self.textPreview.show()
                 with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -30,7 +31,7 @@ class FilePreview(QtWidgets.QWidget, Ui_FilePreview):
                     self.textPreview.setPlainText(content)
 
             elif ext in ['png', 'jpg', 'jpeg', 'bmp', 'gif']:
-                # Show image preview
+                # Prikazujemo pregled slike
                 self.textPreview.hide()
                 self.imagePreview.show()
                 pixmap = QtGui.QPixmap(file_path)
@@ -39,7 +40,7 @@ class FilePreview(QtWidgets.QWidget, Ui_FilePreview):
                                                           QtCore.Qt.KeepAspectRatio,
                                                           QtCore.Qt.SmoothTransformation))
             else:
-                # Unsupported file
+                # Datoteka nije podrzana za pregled
                 self.textPreview.hide()
                 self.imagePreview.hide()
                 self.labelFileName.setText(f"Cannot preview file: {file_path.split('/')[-1]}")

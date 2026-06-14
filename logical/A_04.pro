@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % maksimum dva broja 
 % I nacin:
 maksimum(A,B,M):- A>=B, M is A.

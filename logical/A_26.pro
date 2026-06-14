@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 /*
 
 Merge sort algoritam se zasniva na dekompoziciji. Naime, ulaznu listu delimo na dva jednaka

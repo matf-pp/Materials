@@ -1,3 +1,4 @@
+% Komentar za studente: promenljive imaju konacne domene; ogranicenja su uslovi zadatka, a labeling pokrece pretragu resenja.
 % 2.2.40: ONE + NINE + TWENTY + THIRTY + THIRTY = NINETY
 
 solve(Vars) :-

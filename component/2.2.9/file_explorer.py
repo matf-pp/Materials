@@ -1,3 +1,4 @@
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
 import sys, os
 from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QFileDialog, QTreeWidgetItem
@@ -8,11 +9,11 @@ class FileExplorer(QtWidgets.QWidget, Ui_FileExplorer):
         super().__init__()
         self.setupUi(self)
 
-        # Connect browse button
+        # Povezujemo dugme za izbor putanje
         self.btnBrowse.clicked.connect(self.browse_folder)
         self.linePath.returnPressed.connect(self.load_directory)
 
-        # Double click to open folder
+        # Dvoklik otvara izabrani direktorijum
         self.treeFiles.itemDoubleClicked.connect(self.on_item_double_clicked)
 
     def browse_folder(self):
@@ -35,7 +36,7 @@ class FileExplorer(QtWidgets.QWidget, Ui_FileExplorer):
             self.treeFiles.addTopLevelItem(tree_item)
 
     def on_item_double_clicked(self, item, column):
-        # If double-clicked on a folder, navigate into it
+        # Ako je dvoklik na direktorijum, prelazimo u njega
         path = os.path.join(self.linePath.text(), item.text(0))
         if os.path.isdir(path):
             self.linePath.setText(path)

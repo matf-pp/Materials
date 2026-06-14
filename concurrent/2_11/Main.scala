@@ -1,4 +1,5 @@
 import java.io.File
+import java.util.concurrent.Semaphore
 import scala.io.Source
 
 object Main {
@@ -17,9 +18,42 @@ object Main {
   def stdinTokens(): Array[String] = stdinLines().flatMap(_.trim.split("\\s+").filter(_.nonEmpty)).toArray
 
   def main(args: Array[String]): Unit = {
-    val conns = stdinTokens()(0).toInt
+    val conns = stdinTokens()(0).toInt.max(1)
     val queries = nonEmptyLines("upiti_baze.txt")
-    println(s"Obradjeno upita: ${queries.length}")
-    println(s"Najvise aktivnih konekcija: ${Math.min(conns, queries.length)}")
+    val sem = new Semaphore(conns)
+    val stateLock = new Object
+    val expectedPeak = Math.min(conns, queries.length)
+    var active = 0
+    var maxActive = 0
+    var peakReached = expectedPeak == 0
+    var processed = 0
+    // Semafor ogranicava broj niti koje istovremeno koriste konekciju.
+    val threads = queries.map { _ =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          sem.acquire()
+          try {
+            stateLock.synchronized {
+              active += 1
+              maxActive = Math.max(maxActive, active)
+              if (active >= expectedPeak) {
+                peakReached = true
+                stateLock.notifyAll()
+              }
+              while (!peakReached && active < expectedPeak) stateLock.wait()
+            }
+            stateLock.synchronized {
+              processed += 1
+              active -= 1
+              stateLock.notifyAll()
+            }
+          } finally sem.release()
+        }
+      })
+    }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
+    println(s"Obradjeno upita: $processed")
+    println(s"Najvise aktivnih konekcija: $maxActive")
   }
 }

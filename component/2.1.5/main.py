@@ -1,3 +1,4 @@
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
 import sys
 from PyQt5 import QtWidgets
 from PyQt5.QtCore import Qt
@@ -9,11 +10,11 @@ class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
 
         self.setupUi(self)
 
-        # Connect checkbox signals
+        # Povezujemo signale cek-boksova
         self.checkBox_A.stateChanged.connect(self.on_state_changed)
         self.checkBox_B.stateChanged.connect(self.on_state_changed)
 
-        # Also show toggled signal
+        # Prikazujemo i signal promene stanja
         self.checkBox_A.toggled.connect(self.on_toggled)
         self.checkBox_B.toggled.connect(self.on_toggled)
 

@@ -1,1 +1,2 @@
+% Komentar za studente: promenljive imaju konacne domene; ogranicenja su uslovi zadatka, a labeling pokrece pretragu resenja.
 solve(Vars):- Vars=[B,C,D,MG,S,ZN], B::0..9, C::0..19, D::0..6, MG::0..4, S::0..2, ZN::0..8, B+C+D+MG+S+ZN#=<7, 130*B+800*C+150*D+370*MG+490*S+150*ZN#=<11800, 15*B+11*C+10*D+22*MG+S+13*ZN#=<100, 33*B+31*C+20*D+18*MG+21*S+16*ZN#=<200, labeling([maximize(925*B+1555*C+796*D+1562*MG+4130*S+1377*ZN)], Vars), writeln(Vars).

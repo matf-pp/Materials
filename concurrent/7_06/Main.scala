@@ -1,5 +1,8 @@
 import java.io.File
+import scala.collection.mutable
 import scala.io.Source
+
+case class Offer(agency: String, dest: String, days: Int, price: Int, agencyIndex: Int, offerIndex: Int)
 
 object Main {
   def readLines(file: String): List[String] = {
@@ -23,17 +26,31 @@ object Main {
       "LignjaTravel" -> "LignjaTravel.data",
       "Travellove" -> "Travellove.data"
     )
-    val offers = agencies.flatMap { case (name, file) =>
-      nonEmptyLines(file)
-        .map(_.split("\\s+"))
-        .filter(row => row.length >= 3 && row(0) == dest)
-        .map(row => (name, row(0), row(1).toInt, row(2).toInt))
+    val queue = mutable.Queue[Offer]()
+    val lock = new Object
+    // Svaka agencija cita svoj fajl u posebnoj niti i dodaje ponude u deljeni red.
+    val threads = agencies.zipWithIndex.map { case ((name, file), agencyIndex) =>
+      new Thread(new Runnable {
+        def run(): Unit = {
+          nonEmptyLines(file).map(_.split("\\s+")).zipWithIndex.foreach { case (row, offerIndex) =>
+            if (row.length >= 3 && row(0) == dest) {
+              val offer = Offer(name, row(0), row(1).toInt, row(2).toInt, agencyIndex, offerIndex)
+              lock.synchronized {
+                queue.enqueue(offer)
+              }
+            }
+          }
+        }
+      })
     }
+    threads.foreach(_.start())
+    threads.foreach(_.join())
+    val offers = queue.toVector.sortBy(offer => (offer.agencyIndex, offer.offerIndex))
     if (offers.isEmpty) println(s"Nema ponuda za destinaciju $dest") else {
       println(s"Pristigle ponude za destinaciju $dest:")
-      offers.foreach { case (a, _, days, price) => println(s"$a: $days dana za $price RSD") }
-      val best = offers.minBy { case (a, _, days, price) => (price.toDouble / days, price, a) }
-      println(s"Najpovoljnija ponuda: ${best._1} - ${best._3} dana za ${best._4} RSD")
+      offers.foreach { offer => println(s"${offer.agency}: ${offer.days} dana za ${offer.price} RSD") }
+      val best = offers.minBy(offer => (offer.price.toDouble / offer.days, offer.price, offer.agency))
+      println(s"Najpovoljnija ponuda: ${best.agency} - ${best.days} dana za ${best.price} RSD")
     }
   }
 }

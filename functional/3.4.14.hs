@@ -16,6 +16,7 @@ zatvori i = filter (\(x, _) -> x /= i)
 tabUnapred :: [(Int, String)] -> Int -> [(Int, String)]
 tabUnapred lst n =
   let k = n `mod` length lst
+  -- Rotacija liste pomera aktivni tab za k mesta unapred.
   in drop k lst ++ take k lst
 
 zatvoriSve :: String -> [(Int, String)] -> [(Int, String)]
@@ -25,5 +26,6 @@ zatvoriSve str =
 fokusiraj :: Int -> [(Int, String)] -> [(Int, String)]
 fokusiraj i lst =
   case break (\(x, _) -> x == i) lst of
+    -- Ako trazeni tab ne postoji, redosled ostaje nepromenjen.
     (_, []) -> lst
     (before, (x:after)) -> x : before ++ after

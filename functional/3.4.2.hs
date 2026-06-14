@@ -9,6 +9,7 @@ type AktivneTransakcije = [Transakcija]
 
 izlistaj :: AktivneTransakcije -> String -> [Transakcija]
 izlistaj ts br =
+  -- Transakcija pripada racunu ako je racun posiljalac ili primalac.
   filter (\t -> posiljalac t == br || primalac t == br) ts
 
 dodaj :: AktivneTransakcije -> Transakcija -> AktivneTransakcije
@@ -18,4 +19,5 @@ ukloni :: AktivneTransakcije -> Int -> AktivneTransakcije
 ukloni ts i = filter (\t -> ident t /= i) ts
 
 ukupno :: AktivneTransakcije -> Int
+-- map izdvaja iznose, a sum ih sabira u ukupan promet.
 ukupno ts = sum (map iznos ts)

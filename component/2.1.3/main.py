@@ -1,3 +1,4 @@
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
 import sys
 from PyQt5.QtWidgets import QApplication, QWidget
 from ui_main import Ui_Form
@@ -14,10 +15,10 @@ class FibonacciApp(QWidget, Ui_Form):
 
         self.setupUi(self)
 
-        # Create generator
+        # Pravimo generator nasumicnih brojeva
         self.fib_gen = fibonacci_generator()
 
-        # Connect button
+        # Povezujemo dugme sa funkcijom
         self.btnNext.clicked.connect(self.next_fibonacci)
 
     def next_fibonacci(self):

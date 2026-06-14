@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 /*
 
 Insertion sort algoritam se zasniva na ubacivanju redom svakog elementa liste na svoje pravo

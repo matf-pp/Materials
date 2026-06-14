@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 appendQ([],Ys,Ys).
 appendQ([X|Xs],Ys,[X|Zs]) :- appendQ(Xs,Ys,Zs).
 

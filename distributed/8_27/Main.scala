@@ -1,7 +1,9 @@
+// Komentar za studente: Spark transformacije grade RDD obradu, a akcije kao count, collect ili saveAsTextFile pokrecu izvrsavanje.
 import org.apache.spark.SparkConf
 import org.apache.spark.SparkContext
 
 object Main {
+  // Ulazni redovi su jednostavne vrednosti razdvojene zarezima.
   def columns(line: String): Array[String] = line.split(",", -1).map(_.trim)
 
   def main(args: Array[String]): Unit = {
@@ -13,7 +15,9 @@ object Main {
     val averages = sc.textFile("albums.csv")
       .filter(!_.startsWith("izvodjac,"))
       .map(columns)
+      // Zadrzavamo samo rok albume koji su u prvih 100.
       .filter(row => row.length >= 6 && row(4).equalsIgnoreCase("Rock") && row(5).toInt <= 100)
+      // Grupisemo po godini izdanja i racunamo prosek kolone prodaje.
       .map(row => (row(3).toInt, (row(2).toDouble, 1L)))
       .reduceByKey { (a, b) => (a._1 + b._1, a._2 + b._2) }
       .sortByKey()

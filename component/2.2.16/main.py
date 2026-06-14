@@ -1,3 +1,4 @@
+# Komentar za studente: ovaj fajl sadrzi rucno pisan deo aplikacije; UI klase su u generisanim ui_*.py fajlovima, a ovde se povezuju signali i obrada dogadjaja.
 import sys, random
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
 from ui_hangman import Ui_HangmanGame

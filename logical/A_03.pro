@@ -1,3 +1,4 @@
+% Komentar za studente: cinjenice opisuju poznate podatke, a pravila i rekurzija opisuju kako Prolog izvodi zakljucke.
 % godina je prestupna ako je deljiva sa 4 i nije deljiva sa 100 ili je deljiva sa 400
 prestupna(X):- X mod 4 =:= 0, X mod 100 =\= 0.
 prestupna(X):- X mod 400 =:= 0.
