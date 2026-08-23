@@ -42,7 +42,7 @@ object Main {
   }
 
   def main(args: Array[String]): Unit = {
-    val commands = nonEmptyLines("niti.txt")
+    val commands = nonEmptyLines("komande.txt")
     val results = new Array[String](commands.length)
     // Svaka nit popunjava svoj indeks, pa niz rezultata ne trazi dodatni monitor.
     val threads = commands.zipWithIndex.map { case (cmd, idx) =>

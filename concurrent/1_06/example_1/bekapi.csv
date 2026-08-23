@@ -1,3 +1,4 @@
-b1|true|1000
-b2|sleep 1|10
-b3|false|1000
+b1,echo backup zavrsen,1000
+b2,sleep 2,500
+b3,false,1000
+b4,echo provera zavrsena,1000

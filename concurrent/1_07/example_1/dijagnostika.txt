@@ -1,0 +1,4 @@
+p1|-|echo disk
+p2|-|echo mreza
+p3|p1,p2|echo servisi
+p4|p3|echo izvestaj

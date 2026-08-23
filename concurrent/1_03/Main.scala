@@ -1,22 +1,52 @@
-import scala.io.Source
-
 object Main {
+  val MOD = 1000000007L
+  val text = "Zdravo"
 
-  def stdinLines(): List[String] = Source.stdin.getLines().toList
+  def hash(s: String, h: Long): Long = {
+    var result = h
 
-  def stdinTokens(): Array[String] = stdinLines().flatMap(_.trim.split("\\s+").filter(_.nonEmpty)).toArray
+    for (c <- s) {
+      result = (result * 31 + c.toInt) % MOD
+    }
+
+    result
+  }
+
+  class HashThread(val index: Int, val results: Array[Long])
+      extends Thread {
+
+    override def run(): Unit = {
+      var h = (index + 1).toLong
+      val repetitions = 1000000L + index.toLong * 100000L
+
+      var j = 0L
+      while (j < repetitions) {
+        h = hash(text, h)
+        j += 1
+      }
+
+      results(index) = h
+    }
+  }
 
   def main(args: Array[String]): Unit = {
-    val n = stdinTokens()(0).toInt
-    val result = new Array[Int](n + 1)
-    // Svaka nit racuna jednu vrednost i upisuje je na odvojenu poziciju niza.
-    val threads = (1 to n).map { i =>
-      new Thread(new Runnable {
-        def run(): Unit = result(i) = i * i
-      })
+    val n = scala.io.StdIn.readInt()
+
+    val results = new Array[Long](n)
+    val threads = new Array[HashThread](n)
+
+    for (i <- 0 until n) {
+      threads(i) = new HashThread(i, results)
+      threads(i).start()
     }
-    threads.foreach(_.start())
-    threads.foreach(_.join())
-    println((1 to n).map(i => s"$i=${result(i)}").mkString(", "))
+
+    for (i <- 0 until n) {
+      threads(i).join()
+    }
+
+    for (i <- 0 until n) {
+      println(s"${i} = ${results(i)}")
+    }
   }
 }
+

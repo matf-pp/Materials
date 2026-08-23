@@ -41,11 +41,11 @@ object Main {
     }
   }
 
-  def pipe(line: String): Array[String] = line.split("\\|", -1).map(_.trim)
+  def pipe(line: String): Array[String] = line.split("\\,", -1).map(_.trim)
   def fmtPairs[A, B](pairs: Iterable[(A, B)]): String = pairs.map { case (k, v) => s"$k=$v" }.mkString(", ")
 
   def main(args: Array[String]): Unit = {
-    val rows = nonEmptyLines("bekapi.csv").map(pipe)
+    val rows = nonEmptyLines("zadaci.csv").map(pipe)
     val statuses = Array.fill(rows.length)(("", ""))
     // Svaka komanda ima svoju nit i svoj rok izvrsavanja.
     val threads = rows.zipWithIndex.map { case (row, index) =>

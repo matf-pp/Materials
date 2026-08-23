@@ -1,3 +1,4 @@
-true
-false
-true
+test -f procesi_status.txt
+test -f nepostojeci.txt
+test -d .
+test -d nepostojeci

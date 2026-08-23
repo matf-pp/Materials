@@ -1,30 +1,54 @@
-import java.util.concurrent.atomic.AtomicInteger
-import scala.io.Source
+import java.util.concurrent.atomic.{AtomicBoolean, AtomicInteger}
+import scala.util.Random
 
 object Main {
 
-  def stdinLines(): List[String] = Source.stdin.getLines().toList
+  class Worker(
+      val totalJobs: Int,
+      val interrupted: AtomicBoolean,
+      val processedJobs: AtomicInteger
+  ) extends Thread {
 
-  def stdinTokens(): Array[String] = stdinLines().flatMap(_.trim.split("\\s+").filter(_.nonEmpty)).toArray
+    override def run(): Unit = {
+      val random = new Random()
+
+      while (processedJobs.get() < totalJobs && !interrupted.get()) {
+        // Simulate processing the current job for 1–5 seconds.
+        val seconds = random.nextInt(5) + 1
+        Thread.sleep(seconds * 1000L)
+
+        // The job has finished.
+        processedJobs.incrementAndGet()
+      }
+    }
+  }
 
   def main(args: Array[String]): Unit = {
-    val t = stdinTokens().map(_.toInt)
-    val total = t(0)
-    val threshold = t(1)
-    // AtomicInteger omogucava da radna i glavna nit vide isti broj obradjenih poslova.
-    val processed = new AtomicInteger(0)
-    val worker = new Thread(new Runnable { def run(): Unit = {
-      var stop = false
-      while (!stop && processed.get < total) {
-        val now = processed.incrementAndGet()
-        if (Thread.currentThread.isInterrupted || now >= threshold) stop = true
-      }
-    }})
+    val n = scala.io.StdIn.readInt()
+
+    val interrupted = new AtomicBoolean(false)
+    val processedJobs = new AtomicInteger(0)
+
+    val worker = new Worker(n, interrupted, processedJobs)
     worker.start()
-    while (processed.get < threshold && processed.get < total) Thread.`yield`()
-    if (processed.get >= threshold && processed.get < total) worker.interrupt()
+
+    // Wait for the cancellation signal.
+    val signal = scala.io.StdIn.readLine()
+
+    if (signal == "prekid") {
+      interrupted.set(true)
+    }
+
+    // Wait for the worker to finish.
     worker.join()
-    println(s"Obradjeno poslova: ${processed.get}")
-    println("Status: " + (if (processed.get < total) "PREKINUTO" else "ZAVRSENO"))
+
+    println(s"Obradjeno poslova: ${processedJobs.get()}")
+
+    if (interrupted.get()) {
+      println("Status: PREKINUTO")
+    } else {
+      println("Status: ZAVRSENO")
+    }
   }
 }
+
