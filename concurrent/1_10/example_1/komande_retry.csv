@@ -1,3 +1,4 @@
-c1|true|3
-c2|false|2
-c3|true|1
+baza,echo Provera baze,3
+mreza,false,2
+servis,echo Provera servisa,1
+bekap,echo Provera bekapa,2

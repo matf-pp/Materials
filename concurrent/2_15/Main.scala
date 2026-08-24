@@ -1,40 +1,42 @@
-import java.io.File
 import java.util.concurrent.CountDownLatch
-import java.util.concurrent.atomic.AtomicInteger
-import scala.io.Source
+import scala.util.Random
 
-object Main {
-  def readLines(file: String): List[String] = {
-    val f = new File(file)
-    if (!f.exists()) Nil else {
-      val src = Source.fromFile(f)
-      try src.getLines().toList finally src.close()
-    }
-  }
+class PreparationThread(id: Int, latch: CountDownLatch) extends Thread {
+  override def run(): Unit = {
+    println(s"Priprema zadatka $id...")
 
-  def nonEmptyLines(file: String): List[String] = readLines(file).map(_.trim).filter(_.nonEmpty)
+    val seconds = Random.nextInt(3) + 1
+    Thread.sleep(seconds * 1000L)
 
-  def csv(line: String): Array[String] = line.split(",", -1).map(_.trim)
-
-  def main(args: Array[String]): Unit = {
-    val rows = nonEmptyLines("servisi_start.csv").map(csv)
-    val gate = new CountDownLatch(1)
-    val started = new AtomicInteger(0)
-    val skipped = new AtomicInteger(0)
-    // Servisne niti cekaju zajednicku kapiju pre odluke o pokretanju.
-    val threads = rows.map { row =>
-      new Thread(new Runnable {
-        def run(): Unit = {
-          gate.await()
-          if (row(1) == "DA") started.incrementAndGet()
-          else skipped.incrementAndGet()
-        }
-      })
-    }
-    threads.foreach(_.start())
-    gate.countDown()
-    threads.foreach(_.join())
-    println(s"Pokrenuto servisa: ${started.get}")
-    println(s"Preskoceno servisa: ${skipped.get}")
+    println(s"Zadatak $id zavrsen.")
+    latch.countDown()
   }
 }
+
+object Main {
+  def main(args: Array[String]): Unit = {
+    val n = scala.io.StdIn.readInt()
+
+    val required = (n + 1) / 2
+    val latch = new CountDownLatch(required)
+
+    val threads = (1 to n).map { id =>
+      new PreparationThread(id, latch)
+    }
+
+    threads.foreach(_.start())
+
+    println("Priprema u toku...")
+
+    // Ceka da najmanje polovina zadataka bude zavrsena.
+    latch.await()
+
+    println("Obrada narudzbina zapoceta.")
+
+    // Ceka da se zavrse i preostali pripremni zadaci.
+    threads.foreach(_.join())
+
+    println("Obrada narudzbina zavrsena.")
+  }
+}
+

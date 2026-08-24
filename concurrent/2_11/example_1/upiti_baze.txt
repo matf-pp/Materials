@@ -1,3 +1,10 @@
 select-users
 select-orders
 update-stock
+select-products
+select-categories
+update-prices
+select-reports
+insert-log
+select-settings
+update-status

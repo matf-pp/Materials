@@ -8,7 +8,7 @@ object Main {
     Source.stdin.getLines().flatMap(_.trim.split("\\s+").filter(_.nonEmpty)).toArray
 
   private def readClients(): Vector[Client] = {
-    val source = Source.fromFile("red_klijenata.txt")
+    val source = Source.fromFile("red_klijenata.tsv")
     try {
       source.getLines().filter(_.trim.nonEmpty).zipWithIndex.map { case (line, index) =>
         val parts = line.trim.split("\\s+")

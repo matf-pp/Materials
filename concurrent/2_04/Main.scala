@@ -1,29 +1,34 @@
 import java.util.concurrent.Semaphore
-import scala.io.Source
+import scala.util.Random
 
-object Main {
+class Query(val id: Int, val semaphore: Semaphore) extends Thread:
+  override def run(): Unit =
+    semaphore.acquire()
 
-  def stdinLines(): List[String] = Source.stdin.getLines().toList
+    try
+      println(s"Upit $id se izvrsava")
 
-  def stdinTokens(): Array[String] = stdinLines().flatMap(_.trim.split("\\s+").filter(_.nonEmpty)).toArray
+      val executionTime = 5 + Random.nextInt(6)
+      Thread.sleep(executionTime * 1000L)
 
-  def main(args: Array[String]): Unit = {
-    val a = stdinTokens().map(_.toInt)
-    val places = a(0)
-    val cars = a(1)
-    val sem = new Semaphore(places)
-    // Semafor cuva broj slobodnih mesta na parkingu.
-    val threads = (1 to cars).map { i =>
-      new Thread(new Runnable { def run(): Unit = {
-        sem.acquire()
-        try {
-          println(s"Auto $i usao")
-          println(s"Auto $i izasao")
-        } finally sem.release()
-      }})
-    }
-    threads.foreach(_.start())
-    threads.foreach(_.join())
-    println("Svi automobili su zavrsili")
+      println(s"Upit $id zavrsen")
+    finally
+      semaphore.release()
+
+
+@main def Main(): Unit =
+  val input = scala.io.StdIn.readLine().split(" ").map(_.toInt)
+  val maxConcurrent = input(0)
+  val queryCount = input(1)
+
+  val semaphore = new Semaphore(maxConcurrent)
+
+  val threads = (1 to queryCount).map { id =>
+    val query = new Query(id, semaphore)
+    query.start()
+    query
   }
-}
+
+  threads.foreach(_.join())
+
+  println("Svi upiti su izvrseni")
